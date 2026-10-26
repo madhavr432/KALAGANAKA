@@ -1,0 +1,80 @@
+
+{
+  "dataset_version": "0.1.0",
+  "verification_status": "draft_needs_source_verification",
+  "description": "Starter festival rules. Verify each rule against reliable published sources and regional Panchang conventions before treating it as authoritative.",
+  "festivals": [
+    {
+      "id": "diwali",
+      "name": "Diwali",
+      "names": {
+        "english": "Diwali",
+        "hindi": "दीवाली"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Kartika",
+        "paksha": "amavasya",
+        "tithi": "Amavasya"
+      },
+      "region": "India",
+      "notes": "The observance and date-selection conventions may vary by region and calendar tradition.",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "holi",
+      "name": "Holi",
+      "names": {
+        "english": "Holi",
+        "hindi": "होली"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Phalguna",
+        "paksha": "purnima",
+        "tithi": "Purnima"
+      },
+      "region": "India",
+      "notes": "Regional observance conventions and local calendars should be checked.",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "rama-navami",
+      "name": "Rama Navami",
+      "names": {
+        "english": "Rama Navami",
+        "hindi": "राम नवमी"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Chaitra",
+        "paksha": "shukla",
+        "tithi": "Navami"
+      },
+      "region": "India",
+      "notes": "The applicable Panchang and local observance convention must be confirmed.",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "janmashtami",
+      "name": "Krishna Janmashtami",
+      "names": {
+        "english": "Krishna Janmashtami",
+        "hindi": "कृष्ण जन्माष्टमी"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Bhadrapada",
+        "paksha": "krishna",
+        "tithi": "Ashtami"
+      },
+      "region": "India",
+      "notes": "Regional calendars and observance conventions may differ; verify the applicable rule.",
+      "source": null,
+      "verification_status": "needs_verification"
+    }
+  ]
+}
