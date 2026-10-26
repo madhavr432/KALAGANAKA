@@ -1,0 +1,21 @@
+
+{
+  "traditional_solar": {
+    "title": "Surya Siddhanta",
+    "translation": "Ebenezer Burgess",
+    "edition_year": 1860,
+    "implementation_status": "preliminary_mean_motion_only",
+    "verified_true_longitude": false,
+    "references_to_verify": [
+      "Chapter I: mean solar motion",
+      "Chapter I: epoch and elapsed-day convention",
+      "Chapter II: solar correction"
+    ],
+    "notes": [
+      "The current implementation calculates mean solar longitude from elapsed days.",
+      "The calendar epoch has not yet been mapped to a date.",
+      "The solar equation of the apsis has not been implemented.",
+      "Historical references and numerical constants require independent verification."
+    ]
+  }
+}
