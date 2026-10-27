@@ -107,8 +107,8 @@ def _ask_openrouter(question: str, language: str) -> tuple[str, str]:
 
 
 PROVIDERS = (
-    ("gemini", "GEMINI_API_KEY", _ask_gemini),
     ("openrouter", "OPENROUTER_API_KEY", _ask_openrouter),
+    ("gemini", "GEMINI_API_KEY", _ask_gemini),
 )
 
 
@@ -136,17 +136,15 @@ def generate_answer(question: str, language: str = "auto") -> dict:
                 "answer": answer,
                 "provider": provider_name,
                 "model": model,
-                "fallback_used": provider_name != "grok",
+                "fallback_used" : provider_name != "openrouter"
             }
 
         except Exception as exc:
             # Log the exception type, not the request, response, or API key.
             logger.warning(
-                "Provider %s failed (%s): %s; body=%r; trying next provider",
+                "Provider %s failed (%s); trying next provider",
                 provider_name,
                 type(exc).__name__,
-                str(exc)[:300],
-                str(getattr(exc, "body", ""))[:1000],
             )
             failures.append(provider_name)
 

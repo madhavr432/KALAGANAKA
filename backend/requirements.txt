@@ -6,3 +6,4 @@ google-genai
 python-dotenv
 skyfield==1.55
 jplephem==2.24
+tzdata
