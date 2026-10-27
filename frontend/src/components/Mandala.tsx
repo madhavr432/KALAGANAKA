@@ -1,0 +1,1 @@
+export { Mandala } from './Mandela';
