@@ -82,22 +82,44 @@ export interface SolarComparisonResponse {
   coordinate_system: string;
   instant: string;
   compared_planets: string[];
+  unmatched_traditional_planets: string[];
+  unmatched_modern_planets: string[];
   results: SolarComparisonResult[];
-  chart_data: Array<{
+  chart_data?: Array<{
     planet: string;
     traditional_longitude_deg: number;
     modern_longitude_deg: number;
     absolute_difference_deg: number;
   }>;
   limitations: string[];
-  comparison_basis: {
-    date: string;
-    traditional_calculation_type: string;
-    traditional_is_true_longitude: boolean;
-    modern_coordinate_system: string;
-    traditional_reference_date: string;
-    scientific_validation: string;
+  comparison_basis?: Record<string, unknown>;
+}
+
+export interface SolarTimeSeriesPoint {
+  date: string;
+  traditional_longitude_deg: number;
+  modern_longitude_deg: number;
+  signed_difference_deg: number;
+  absolute_difference_deg: number;
+  units: string;
+}
+
+export interface SolarTimeSeriesResponse {
+  status: string;
+  start_date: string;
+  end_date: string;
+  total_points: number;
+  time_series: SolarTimeSeriesPoint[];
+  summary_statistics: {
+    mean_absolute_difference_deg: number;
+    max_absolute_difference_deg: number;
+    min_absolute_difference_deg: number;
+    std_deviation_deg: number;
   };
+  traditional_method: string;
+  modern_method: string;
+  units: string;
+  limitations: string[];
 }
 
 export interface ComparisonResponse {
@@ -528,6 +550,37 @@ export async function fetchSolarComparison(date: string): Promise<SolarCompariso
     if (error instanceof AstronomyApiError) throw error;
     throw new AstronomyApiError(
       `Unable to fetch solar comparison from ${baseUrl}/comparison/solar.`,
+      0,
+      error,
+    );
+  }
+}
+
+/**
+ * Fetch comparative time-series between traditional and modern solar longitudes over N days.
+ */
+export async function fetchSolarTimeSeries(params: {
+  start_date: string;
+  days?: number;
+  step_days?: number;
+}): Promise<SolarTimeSeriesResponse> {
+  const baseUrl = getBaseUrl();
+  const queryParams = new URLSearchParams({
+    start_date: params.start_date,
+    days: String(params.days ?? 14),
+    step_days: String(params.step_days ?? 1),
+  });
+
+  try {
+    const res = await fetch(`${baseUrl}/comparison/solar-time-series?${queryParams.toString()}`, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+    });
+    return await handleResponse<SolarTimeSeriesResponse>(res);
+  } catch (error) {
+    if (error instanceof AstronomyApiError) throw error;
+    throw new AstronomyApiError(
+      `Unable to fetch solar time series comparison from ${baseUrl}.`,
       0,
       error,
     );

@@ -1,17 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import {
-  Search,
-  Bell,
-  Menu,
-  X,
-  Compass,
-  Moon,
-  Sun,
-  Globe2,
-  Calendar,
-  Sparkles,
-} from "lucide-react";
+import { Search, Bell, Menu, X, Compass, Moon, Sun, Sparkles, Scale } from "lucide-react";
 import { Mandala } from "@/components/Mandala";
 import spaceBg from "@/assets/space-bg.jpg";
 import nebulaBg from "@/assets/nebula-bg.jpg";
@@ -60,18 +49,11 @@ const ALL_MODULES = [
     icon: Sun,
   },
   {
-    to: "/planetary-explorer",
-    title: "ग्रह मण्डल वेधशाला",
-    enTitle: "Planetary Explorer",
-    desc: "7 classical Grahas, time-travel & Surya Siddhanta comparison",
-    icon: Globe2,
-  },
-  {
-    to: "/festivals",
-    title: "पर्व एवं उत्सव",
-    enTitle: "Festival Calendar",
-    desc: "Interactive festival dates, astronomical tithi rules & regions",
-    icon: Calendar,
+    to: "/astronomy-lab",
+    title: "वेधशाला प्रयोगशाला",
+    enTitle: "Ancient vs Modern Analysis Lab",
+    desc: "Rigorous empirical comparison between Surya Siddhanta and NASA JPL DE421 ephemeris",
+    icon: Scale,
   },
   {
     to: "/assistant",
@@ -99,8 +81,7 @@ function Index() {
     { label: "TIMEKEEPING", to: "/timekeeping" },
     { label: "LUNAR", to: "/chandra-panchang" },
     { label: "SOLAR", to: "/saur-panchang" },
-    { label: "PLANETS", to: "/planetary-explorer" },
-    { label: "FESTIVALS", to: "/festivals" },
+    { label: "LAB", to: "/astronomy-lab" },
     { label: "ASSISTANT", to: "/assistant" },
   ];
 

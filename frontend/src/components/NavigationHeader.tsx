@@ -1,26 +1,15 @@
 import React, { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import {
-  Compass,
-  Moon,
-  Sun,
-  Globe2,
-  Calendar,
-  Sparkles,
-  ArrowLeft,
-  Menu,
-  X,
-  Home,
-} from "lucide-react";
+import { Compass, Moon, Sun, Sparkles, ArrowLeft, Menu, X, Home, Scale } from "lucide-react";
 
 export interface NavigationHeaderProps {
   currentFeature?:
     | "timekeeping"
     | "chandra-panchang"
     | "saur-panchang"
-    | "planetary-explorer"
-    | "festivals"
-    | "assistant";
+    | "assistant"
+    | "astronomy-lab"
+    | "analysis-lab";
   title?: string;
   subtitle?: string;
 }
@@ -48,18 +37,11 @@ export const NAV_LINKS = [
     id: "saur-panchang",
   },
   {
-    to: "/planetary-explorer",
-    label: "ग्रह मण्डल",
-    enLabel: "Planetary Explorer",
-    icon: Globe2,
-    id: "planetary-explorer",
-  },
-  {
-    to: "/festivals",
-    label: "पर्व एवं उत्सव",
-    enLabel: "Festivals",
-    icon: Calendar,
-    id: "festivals",
+    to: "/astronomy-lab",
+    label: "वेधशाला प्रयोगशाला",
+    enLabel: "Analysis Lab",
+    icon: Scale,
+    id: "astronomy-lab",
   },
   {
     to: "/assistant",
