@@ -71,7 +71,115 @@
         "tithi": "Ashtami"
       },
       "region": "India",
-      "notes": "Regional calendars and observance conventions may differ; verify the applicable rule.",
+      "notes": "Observed on Bhadrapada Krishna Ashtami, typically when Rohini Nakshatra prevails at midnight (Nishita Kala).",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "maha-shivaratri",
+      "name": "Maha Shivaratri",
+      "names": {
+        "english": "Maha Shivaratri",
+        "hindi": "महाशिवरात्रि"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Phalguna",
+        "paksha": "krishna",
+        "tithi": "Chaturdashi"
+      },
+      "region": "India",
+      "notes": "Observed on Krishna Chaturdashi of Phalguna (North Purnimanta) / Magha (South Amanta) during midnight Nishita Kala.",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "buddha-purnima",
+      "name": "Buddha Purnima",
+      "names": {
+        "english": "Buddha Purnima",
+        "hindi": "बुद्ध पूर्णिमा"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Vaishakha",
+        "paksha": "shukla",
+        "tithi": "Purnima"
+      },
+      "region": "India",
+      "notes": "Celebrated on the full moon day of Vaishakha month, marking the birth, enlightenment, and parinirvana of Gautama Buddha.",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "guru-purnima",
+      "name": "Guru Purnima",
+      "names": {
+        "english": "Guru Purnima",
+        "hindi": "गुरु पूर्णिमा"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Ashadha",
+        "paksha": "shukla",
+        "tithi": "Purnima"
+      },
+      "region": "India",
+      "notes": "Dedicated to spiritual and academic teachers; also known as Vyasa Purnima celebrating the birth of sage Veda Vyasa.",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "raksha-bandhan",
+      "name": "Raksha Bandhan",
+      "names": {
+        "english": "Raksha Bandhan",
+        "hindi": "रक्षा बन्धन"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Shravana",
+        "paksha": "shukla",
+        "tithi": "Purnima"
+      },
+      "region": "India",
+      "notes": "Celebrated on Shravana Purnima during Aparahna, avoiding the inauspicious Bhadra Karana window.",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "ganesh-chaturthi",
+      "name": "Ganesh Chaturthi",
+      "names": {
+        "english": "Ganesh Chaturthi",
+        "hindi": "गणेश चतुर्थी"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Bhadrapada",
+        "paksha": "shukla",
+        "tithi": "Chaturthi"
+      },
+      "region": "India",
+      "notes": "Observed on Bhadrapada Shukla Chaturthi when the tithi prevails during Madhyanha (midday puja window).",
+      "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "navaratri",
+      "name": "Sharad Navaratri",
+      "names": {
+        "english": "Sharad Navaratri",
+        "hindi": "शारदीय नवरात्रि"
+      },
+      "rule_type": "lunar_tithi",
+      "rule": {
+        "lunar_month": "Ashwina",
+        "paksha": "shukla",
+        "tithi": "Pratipada"
+      },
+      "region": "India",
+      "notes": "Nine-night festival celebrating Devi Durga, beginning on Ashwina Shukla Pratipada with Ghatasthapana.",
       "source": null,
       "verification_status": "needs_verification"
     },

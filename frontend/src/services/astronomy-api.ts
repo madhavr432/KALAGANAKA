@@ -283,6 +283,35 @@ export interface AssistantChatResponse {
   fallback_used: boolean;
 }
 
+export interface DailyPanchangRequest {
+  date: string;
+  latitude: number;
+  longitude: number;
+  elevation_m?: number;
+  timezone?: string;
+}
+
+export interface DailyPanchangResponse {
+  date: string;
+  observer: SolarObserver;
+  sunrise: {
+    time_utc: string | null;
+    time_local: string | null;
+    available: boolean;
+    reason: string | null;
+  };
+  vara: {
+    index: number;
+    name_english: string;
+    name_sanskrit: string;
+    ruling_planet: string;
+    deity?: string;
+  };
+  panchang: PanchangInstantResponse | null;
+  status: string;
+  message?: string | null;
+}
+
 export class AstronomyApiError extends Error {
   public status?: number;
   public details?: unknown;
@@ -499,6 +528,39 @@ export async function fetchSolarComparison(date: string): Promise<SolarCompariso
     if (error instanceof AstronomyApiError) throw error;
     throw new AstronomyApiError(
       `Unable to fetch solar comparison from ${baseUrl}/comparison/solar.`,
+      0,
+      error,
+    );
+  }
+}
+
+/**
+ * Fetch instantaneous Panchang Angas (Tithi, Nakshatra, Yoga, Karana).
+ */
+export async function fetchDailyPanchang(
+  payload: DailyPanchangRequest,
+): Promise<DailyPanchangResponse> {
+  const baseUrl = getBaseUrl();
+  try {
+    const res = await fetch(`${baseUrl}/panchang/daily`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        date: payload.date,
+        latitude: payload.latitude,
+        longitude: payload.longitude,
+        elevation_m: payload.elevation_m ?? 0.0,
+        timezone: payload.timezone ?? "Asia/Kolkata",
+      }),
+    });
+    return await handleResponse<DailyPanchangResponse>(res);
+  } catch (error) {
+    if (error instanceof AstronomyApiError) throw error;
+    throw new AstronomyApiError(
+      `Unable to fetch daily Panchang from ${baseUrl}. Ensure backend is running.`,
       0,
       error,
     );

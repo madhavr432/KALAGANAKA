@@ -382,4 +382,3 @@ export function SolarFestivalExplorer({
     </section>
   );
 }
-
