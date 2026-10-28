@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { type TraditionalSolarResponse, type ComparisonResponse } from "@/services/astronomy-api";
 import { Scale, AlertCircle, BookOpen, CheckCircle2 } from "lucide-react";
 
@@ -17,7 +17,7 @@ export function TraditionalModernComparison({
   isLoading,
   error,
 }: TraditionalModernComparisonProps) {
-  const sunComparison = comparisonResult?.comparisons.find((c) => c.body.toLowerCase() === "sun");
+  const sunComparison = comparisonResult?.comparisons?.find((c) => c.body.toLowerCase() === "sun");
 
   return (
     <div className="flex flex-col gap-5 rounded-xl border border-gold/25 bg-background/80 p-5 shadow-xl backdrop-blur-md">
@@ -26,25 +26,25 @@ export function TraditionalModernComparison({
         <div className="flex items-center gap-2">
           <Scale className="h-5 w-5 text-gold" />
           <h3 className="font-deva text-xl text-gold-gradient sm:text-2xl">
-            पारम्परिक एवं आधुनिक तुलना (Traditional vs Modern Comparison)
+            à¤ªà¤¾à¤°à¤®à¥à¤ªà¤°à¤¿à¤• à¤à¤µà¤‚ à¤†à¤§à¥à¤¨à¤¿à¤• à¤¤à¥à¤²à¤¨à¤¾ (Traditional vs Modern Comparison)
           </h3>
         </div>
         <span className="rounded-full border border-gold/30 bg-gold/10 px-2.5 py-0.5 font-sans text-xs text-gold-soft">
-          Surya Siddhanta ↔ JPL DE421
+          Surya Siddhanta â†” JPL DE421
         </span>
       </div>
 
       {isLoading ? (
         <div className="flex items-center justify-center p-8 text-gold-soft">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-gold border-t-transparent mr-3" />
-          <span>तुलना गणना प्रगति पर है (Fetching astronomical comparison)...</span>
+          <span>à¤¤à¥à¤²à¤¨à¤¾ à¤—à¤£à¤¨à¤¾ à¤ªà¥à¤°à¤—à¤¤à¤¿ à¤ªà¤° à¤¹à¥ˆ (Fetching astronomical comparison)...</span>
         </div>
       ) : error ? (
         <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-xs text-amber-300">
           <div className="flex items-start gap-2">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
             <div>
-              <strong className="font-semibold">तुलना अनुपलब्ध (Comparison Unavailable):</strong>
+              <strong className="font-semibold">à¤¤à¥à¤²à¤¨à¤¾ à¤…à¤¨à¥à¤ªà¤²à¤¬à¥à¤§ (Comparison Unavailable):</strong>
               <p className="mt-0.5">{error}</p>
             </div>
           </div>
@@ -56,15 +56,15 @@ export function TraditionalModernComparison({
             {/* Traditional Card */}
             <div className="rounded-lg border border-gold/25 bg-gold/5 p-4">
               <div className="flex items-center justify-between text-xs text-gold">
-                <span className="font-deva font-semibold">सूर्य सिद्धान्त (Traditional)</span>
+                <span className="font-deva font-semibold">à¤¸à¥‚à¤°à¥à¤¯ à¤¸à¤¿à¤¦à¥à¤§à¤¾à¤¨à¥à¤¤ (Traditional)</span>
                 <span className="rounded bg-gold/20 px-1.5 py-0.5 text-[10px]">Preliminary</span>
               </div>
               <p className="mt-1 text-xs text-muted-foreground">
-                Mean Solar Longitude (मध्यम सूर्य)
+                Mean Solar Longitude (à¤®à¤§à¥à¤¯à¤® à¤¸à¥‚à¤°à¥à¤¯)
               </p>
               <div className="mt-3">
                 <span className="font-mono text-2xl font-bold text-gold-light">
-                  {traditionalSolar.longitude_deg.toFixed(4)}°
+                  {traditionalSolar.longitude_deg.toFixed(4)}Â°
                 </span>
               </div>
               <p className="mt-2 text-[11px] text-gold-soft">
@@ -75,17 +75,17 @@ export function TraditionalModernComparison({
             {/* Modern Card */}
             <div className="rounded-lg border border-blue-400/25 bg-blue-500/5 p-4">
               <div className="flex items-center justify-between text-xs text-blue-300">
-                <span className="font-deva font-semibold">आधुनिक खगोलिकी (Modern)</span>
+                <span className="font-deva font-semibold">à¤†à¤§à¥à¤¨à¤¿à¤• à¤–à¤—à¥‹à¤²à¤¿à¤•à¥€ (Modern)</span>
                 <span className="rounded bg-blue-500/20 px-1.5 py-0.5 text-[10px]">JPL DE421</span>
               </div>
               <p className="mt-1 text-xs text-muted-foreground">Apparent Geocentric Longitude</p>
               <div className="mt-3">
                 <span className="font-mono text-2xl font-bold text-blue-200">
                   {sunComparison
-                    ? `${sunComparison.modern_deg.toFixed(4)}°`
+                    ? `${sunComparison.modern_deg.toFixed(4)}Â°`
                     : modernSolarLongitudeDeg != null
-                      ? `${modernSolarLongitudeDeg.toFixed(4)}°`
-                      : "—"}
+                      ? `${modernSolarLongitudeDeg.toFixed(4)}Â°`
+                      : "â€”"}
                 </span>
               </div>
               <p className="mt-2 text-[11px] text-blue-300">
@@ -96,17 +96,17 @@ export function TraditionalModernComparison({
             {/* Difference / Antaram Card */}
             <div className="rounded-lg border border-purple-400/25 bg-purple-500/5 p-4">
               <div className="flex items-center justify-between text-xs text-purple-300">
-                <span className="font-deva font-semibold">अन्तर (Difference $\Delta$)</span>
+                <span className="font-deva font-semibold">à¤…à¤¨à¥à¤¤à¤° (Difference $\Delta$)</span>
                 <CheckCircle2 className="h-3.5 w-3.5 text-purple-400" />
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">Traditional − Modern</p>
+              <p className="mt-1 text-xs text-muted-foreground">Traditional âˆ’ Modern</p>
               <div className="mt-3">
                 <span className="font-mono text-2xl font-bold text-purple-200">
                   {sunComparison
-                    ? `${sunComparison.difference_deg >= 0 ? "+" : ""}${sunComparison.difference_deg.toFixed(4)}°`
+                    ? `${sunComparison.difference_deg >= 0 ? "+" : ""}${sunComparison.difference_deg.toFixed(4)}Â°`
                     : modernSolarLongitudeDeg != null
-                      ? `${(traditionalSolar.longitude_deg - modernSolarLongitudeDeg).toFixed(4)}°`
-                      : "—"}
+                      ? `${(traditionalSolar.longitude_deg - modernSolarLongitudeDeg).toFixed(4)}Â°`
+                      : "â€”"}
                 </span>
               </div>
               <p className="mt-2 text-[11px] text-purple-300">
@@ -121,7 +121,7 @@ export function TraditionalModernComparison({
               <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
               <div className="space-y-1.5 text-muted-foreground leading-relaxed">
                 <p className="font-semibold text-gold">
-                  वैज्ञानिक एवं ऐतिहासिक व्याख्या (Scientific Clarification):
+                  à¤µà¥ˆà¤œà¥à¤žà¤¾à¤¨à¤¿à¤• à¤à¤µà¤‚ à¤à¤¤à¤¿à¤¹à¤¾à¤¸à¤¿à¤• à¤µà¥à¤¯à¤¾à¤–à¥à¤¯à¤¾ (Scientific Clarification):
                 </p>
                 <p>
                   1. <strong>Ecliptic Longitude vs Sundial Reading:</strong> The Samrat Yantra
@@ -133,8 +133,8 @@ export function TraditionalModernComparison({
                 <p>
                   2. <strong>Preliminary Mean Model:</strong> As documented by the backend, the
                   Surya Siddhanta calculation currently models the{" "}
-                  <em>mean solar longitude (मध्यम मान)</em> without applying the traditional
-                  equation of the apsis (मन्दफल / solar equation of center, which accounts for
+                  <em>mean solar longitude (à¤®à¤§à¥à¤¯à¤® à¤®à¤¾à¤¨)</em> without applying the traditional
+                  equation of the apsis (à¤®à¤¨à¥à¤¦à¤«à¤² / solar equation of center, which accounts for
                   orbital eccentricity and produces true longitude).
                 </p>
                 {traditionalSolar.limitations && traditionalSolar.limitations.length > 0 && (
@@ -159,3 +159,4 @@ export function TraditionalModernComparison({
     </div>
   );
 }
+
