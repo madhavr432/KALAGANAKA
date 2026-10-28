@@ -3,8 +3,7 @@
 
 import unittest
 from unittest.mock import patch
-
-from app.services import grok_service
+from app.services import ai_service
 
 
 class TestGenerateAnswer(unittest.TestCase):
@@ -15,7 +14,7 @@ class TestGenerateAnswer(unittest.TestCase):
         )
 
         self.providers_patch = patch.object(
-            grok_service, "PROVIDERS", self.providers
+            ai_service, "PROVIDERS", self.providers
         )
         self.providers_patch.start()
         self.addCleanup(self.providers_patch.stop)
@@ -39,8 +38,8 @@ class TestGenerateAnswer(unittest.TestCase):
             lambda q, lang: self.fail("Gemini should not be called")),
         )
 
-        with patch.object(grok_service, "PROVIDERS", providers):
-            result = grok_service.generate_answer("Test question")
+        with patch.object(ai_service, "PROVIDERS", providers):
+            result = ai_service.generate_answer("Test question")
 
         self.assertEqual(result["provider"], "openrouter")
         self.assertEqual(result["answer"], "Primary answer")
@@ -56,8 +55,8 @@ class TestGenerateAnswer(unittest.TestCase):
             lambda q, lang: ("Fallback answer", "gemini-model")),
         )
 
-        with patch.object(grok_service, "PROVIDERS", providers):
-            result = grok_service.generate_answer("Test question")
+        with patch.object(ai_service, "PROVIDERS", providers):
+            result = ai_service.generate_answer("Test question")
 
         self.assertEqual(result["provider"], "gemini")
         self.assertEqual(result["answer"], "Fallback answer")
@@ -65,14 +64,14 @@ class TestGenerateAnswer(unittest.TestCase):
 
     def test_missing_keys_skip_unconfigured_providers(self):
         with patch.dict("os.environ", {}, clear=True), patch.object(
-            grok_service, "_ask_openrouter"
+            ai_service, "_ask_openrouter"
         ) as openrouter, patch.object(
-            grok_service, "_ask_gemini"
+            ai_service, "_ask_gemini"
         ) as gemini:
             with self.assertRaisesRegex(
                 RuntimeError, "No AI providers are configured"
             ):
-                grok_service.generate_answer("Test question")
+                ai_service.generate_answer("Test question")
 
         openrouter.assert_not_called()
         gemini.assert_not_called()
@@ -82,21 +81,22 @@ class TestGenerateAnswer(unittest.TestCase):
             with self.assertRaisesRegex(
                 RuntimeError, "No AI providers are configured"
             ):
-                grok_service.generate_answer("Test question")
+                ai_service.generate_answer("Test question")
 
     def test_all_providers_failing_raises_safe_error(self):
         with patch.object(
-            grok_service, "_ask_openrouter",
+            ai_service, "_ask_openrouter",
             side_effect=RuntimeError("OpenRouter unavailable"),
         ), patch.object(
-            grok_service, "_ask_gemini",
+            ai_service, "_ask_gemini",
             side_effect=RuntimeError("Gemini unavailable"),
         ):
             with self.assertRaisesRegex(
                 RuntimeError, "All configured AI providers failed"
             ):
-                grok_service.generate_answer("Test question")
+                ai_service.generate_answer("Test question")
 
 
 if __name__ == "__main__":
     unittest.main()
+
