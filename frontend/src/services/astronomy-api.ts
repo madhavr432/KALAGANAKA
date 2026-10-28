@@ -65,6 +65,41 @@ export interface ComparisonItem {
   magnitude_deg: number;
 }
 
+export interface SolarComparisonResult {
+  planet: string;
+  traditional_longitude_deg: number;
+  modern_longitude_deg: number;
+  signed_difference_deg: number;
+  absolute_difference_deg: number;
+}
+
+export interface SolarComparisonResponse {
+  status: string;
+  is_mock: boolean;
+  traditional_method: string;
+  modern_method: string;
+  modern_data_source: string;
+  coordinate_system: string;
+  instant: string;
+  compared_planets: string[];
+  results: SolarComparisonResult[];
+  chart_data: Array<{
+    planet: string;
+    traditional_longitude_deg: number;
+    modern_longitude_deg: number;
+    absolute_difference_deg: number;
+  }>;
+  limitations: string[];
+  comparison_basis: {
+    date: string;
+    traditional_calculation_type: string;
+    traditional_is_true_longitude: boolean;
+    modern_coordinate_system: string;
+    traditional_reference_date: string;
+    scientific_validation: string;
+  };
+}
+
 export interface ComparisonResponse {
   traditional_method: string;
   modern_method: string;
@@ -441,6 +476,29 @@ export async function comparePlanetaryPositions(payload: {
     if (error instanceof AstronomyApiError) throw error;
     throw new AstronomyApiError(
       `Unable to compare positions via ${baseUrl}/comparison/compare.`,
+      0,
+      error,
+    );
+  }
+}
+
+/**
+ * Compare preliminary traditional mean solar longitude with modern DE421 sidereal longitude.
+ */
+export async function fetchSolarComparison(date: string): Promise<SolarComparisonResponse> {
+  const baseUrl = getBaseUrl();
+  const queryParams = new URLSearchParams({ date });
+
+  try {
+    const res = await fetch(`${baseUrl}/comparison/solar?${queryParams.toString()}`, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+    });
+    return await handleResponse<SolarComparisonResponse>(res);
+  } catch (error) {
+    if (error instanceof AstronomyApiError) throw error;
+    throw new AstronomyApiError(
+      `Unable to fetch solar comparison from ${baseUrl}/comparison/solar.`,
       0,
       error,
     );

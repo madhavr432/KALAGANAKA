@@ -1,8 +1,7 @@
-
 {
   "dataset_version": "0.1.0",
   "verification_status": "draft_needs_source_verification",
-  "description": "Starter festival rules. Verify each rule against reliable published sources and regional Panchang conventions before treating it as authoritative.",
+  "description": "Curated festival rules covering lunar tithi observances and solar calendar transitions (Sankranti and Solar New Years). Verify each rule against reliable published sources and regional Panchang conventions before treating it as authoritative.",
   "festivals": [
     {
       "id": "diwali",
@@ -74,6 +73,212 @@
       "region": "India",
       "notes": "Regional calendars and observance conventions may differ; verify the applicable rule.",
       "source": null,
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "makar-sankranti",
+      "name": "Makar Sankranti",
+      "names": {
+        "english": "Makar Sankranti",
+        "hindi": "मकर संक्रान्ति"
+      },
+      "rule_type": "solar_ingress",
+      "rule": {
+        "rashi": "Makara",
+        "ingress_longitude_deg": 270.0,
+        "season": "Shishira",
+        "transition_name": "Uttarayana Ingress"
+      },
+      "region": "India",
+      "notes": "Sun enters sidereal Makara (Capricorn). In traditional observance, if ingress occurs after sunset, the festival is observed on the following day. Marks the sacred Punya Kala window.",
+      "source": "Surya Siddhanta & Nirayana Solar Calendar",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "pongal",
+      "name": "Pongal",
+      "names": {
+        "english": "Thai Pongal",
+        "hindi": "पोंगल / थाई पोंगल",
+        "tamil": "தைப்பொங்கல்"
+      },
+      "rule_type": "solar_month_start",
+      "rule": {
+        "solar_month": "Thai",
+        "rashi": "Makara",
+        "day": 1
+      },
+      "region": "South",
+      "notes": "Celebrated on the first day of the Tamil solar month Thai, synchronized with the Sun's Makara transit. Dedicated to Surya and agricultural bounty.",
+      "source": "Tamil Solar Calendar (Vakya / Drik Panchangam)",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "mesha-sankranti",
+      "name": "Mesha Sankranti",
+      "names": {
+        "english": "Mesha Sankranti",
+        "hindi": "मेष संक्रान्ति"
+      },
+      "rule_type": "solar_ingress",
+      "rule": {
+        "rashi": "Mesha",
+        "ingress_longitude_deg": 0.0,
+        "transition_name": "Maha Vishuva Sankranti"
+      },
+      "region": "India",
+      "notes": "Sun enters sidereal Mesha (Aries), the zero point of the Nirayana zodiac. Forms the astronomical basis for regional solar new year festivals across India.",
+      "source": "Surya Siddhanta & Indian Astronomical Ephemeris",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "puthandu",
+      "name": "Puthandu",
+      "names": {
+        "english": "Puthandu",
+        "hindi": "पुथांडु (तमिल नववर्ष)",
+        "tamil": "தமிழ்ப் புத்தாண்டு"
+      },
+      "rule_type": "solar_month_start",
+      "rule": {
+        "solar_month": "Chithirai",
+        "rashi": "Mesha",
+        "day": 1
+      },
+      "region": "South",
+      "notes": "First day of Chithirai month. If Mesha Sankranti occurs before sunset, that civil day is Chithirai 1; otherwise the next day.",
+      "source": "Tamil Panchangam Conventions",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "vishu",
+      "name": "Vishu",
+      "names": {
+        "english": "Vishu",
+        "hindi": "विषु",
+        "malayalam": "വിഷു"
+      },
+      "rule_type": "solar_ingress",
+      "rule": {
+        "solar_month": "Medam",
+        "rashi": "Mesha",
+        "day": 1
+      },
+      "region": "South",
+      "notes": "Kerala astronomical new year. Historically connected to the vernal equinox (Vishuva) when day and night were equal. Celebrated with Vishukkani.",
+      "source": "Kollam Era Solar Calendar",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "poila-boishakh",
+      "name": "Poila Boishakh",
+      "names": {
+        "english": "Poila Boishakh",
+        "hindi": "पोइला बैसाख",
+        "bengali": "পয়লা বৈশাখ"
+      },
+      "rule_type": "solar_month_start",
+      "rule": {
+        "solar_month": "Boishakh",
+        "rashi": "Mesha",
+        "day": 1
+      },
+      "region": "East",
+      "notes": "First day of Boishakh. Determined by the transit of Sun into Mesha using the Panjika Danda rule (if transit occurs before midnight/sunset).",
+      "source": "Surya Siddhanta & Drik Siddhanta Bengali Panjika",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "pana-sankranti",
+      "name": "Pana Sankranti",
+      "names": {
+        "english": "Pana Sankranti",
+        "hindi": "पणा संक्रान्ति",
+        "odia": "ପଣା ସଂକ୍ରାନ୍ତି"
+      },
+      "rule_type": "solar_ingress",
+      "rule": {
+        "solar_month": "Mesha",
+        "rashi": "Mesha",
+        "day": 1
+      },
+      "region": "East",
+      "notes": "Odia solar New Year celebrating the arrival of the spring/summer solar cycle with sweet Bela Pana offerings.",
+      "source": "Odia Kohinoor / Biraja Panjika",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "baisakhi",
+      "name": "Baisakhi",
+      "names": {
+        "english": "Baisakhi",
+        "hindi": "बैसाखी",
+        "punjabi": "ਵੈਸਾਖੀ"
+      },
+      "rule_type": "solar_ingress",
+      "rule": {
+        "solar_month": "Vaisakh",
+        "rashi": "Mesha",
+        "day": 1
+      },
+      "region": "North",
+      "notes": "Solar harvest festival marking the Sun's ingress into Mesha. Also commemorates the formation of Khalsa Panth in 1699 CE.",
+      "source": "North Indian Bikrami Solar Calendar",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "karka-sankranti",
+      "name": "Karka Sankranti",
+      "names": {
+        "english": "Karka Sankranti",
+        "hindi": "कर्क संक्रान्ति"
+      },
+      "rule_type": "solar_ingress",
+      "rule": {
+        "rashi": "Karka",
+        "ingress_longitude_deg": 90.0,
+        "transition_name": "Dakshinayana Ingress"
+      },
+      "region": "India",
+      "notes": "Sun enters sidereal Karka (Cancer), marking the traditional commencement of Dakshinayana (southward movement of the Sun).",
+      "source": "Surya Siddhanta & Nirayana Ephemeris",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "chhath-puja",
+      "name": "Chhath Puja",
+      "names": {
+        "english": "Chhath Puja",
+        "hindi": "छठ पूजा"
+      },
+      "rule_type": "solar_reverence",
+      "rule": {
+        "lunar_month": "Kartika",
+        "solar_season": "Sharad / Hemanta",
+        "tithi": "Shashthi",
+        "solar_target": "Surya & Usha"
+      },
+      "region": "East",
+      "notes": "Rigvedic solar thanksgiving ritual. Devotees offer Arghya to setting and rising Sun along riverbanks, honoring the solar life-force.",
+      "source": "Vedic Solar Tradition & Regional Panchang",
+      "verification_status": "needs_verification"
+    },
+    {
+      "id": "ratha-saptami",
+      "name": "Ratha Saptami",
+      "names": {
+        "english": "Ratha Saptami",
+        "hindi": "रथ सप्तमी (सूर्य जयन्ती)"
+      },
+      "rule_type": "solar_reverence",
+      "rule": {
+        "lunar_month": "Magha",
+        "paksha": "shukla",
+        "tithi": "Saptami"
+      },
+      "region": "India",
+      "notes": "Celebrates Surya turning his seven-horse chariot (representing the 7 rays/days) towards the north-east, heralding warmer spring days.",
+      "source": "Surya Purana & Traditional Panchang",
       "verification_status": "needs_verification"
     }
   ]
