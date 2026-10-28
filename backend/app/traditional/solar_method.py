@@ -63,3 +63,32 @@ def calculate_mean_solar_longitude_for_date(
         REFERENCE_MEAN_SOLAR_LONGITUDE_DEG
         + elapsed_days * _daily_solar_motion()
     )
+# Preliminary solar-apsis estimate from the transcribed 1850 table.
+REFERENCE_APSIS_YEAR = 1850.0
+REFERENCE_SOLAR_APSIS_LONGITUDE_DEG = 95 + 4 / 60
+YEARS_PER_APSIS_ARCMINUTE = 516.8
+
+
+def calculate_solar_apsis_longitude_for_year(
+    target_year: float,
+) -> float:
+    """Estimate solar-apsis longitude from the historical 1850 reference.
+
+    Preliminary linear estimate only; not a complete traditional
+    true-solar-longitude calculation.
+    """
+    if (
+        isinstance(target_year, bool)
+        or not isinstance(target_year, (int, float))
+        or not math.isfinite(target_year)
+    ):
+        raise ValueError("target_year must be a finite number.")
+
+    elapsed_years = target_year - REFERENCE_APSIS_YEAR
+    motion_degrees = (
+        elapsed_years / YEARS_PER_APSIS_ARCMINUTE / 60.0
+    )
+
+    return normalize_angle(
+        REFERENCE_SOLAR_APSIS_LONGITUDE_DEG + motion_degrees
+    )

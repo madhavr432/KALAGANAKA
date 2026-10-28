@@ -284,3 +284,33 @@ class TransitionsIntervalRequest(BaseModel):
         le=500,
         description="Optional limit on total transitions returned (1 to 500).",
     )
+class DailyPanchangRequest(BaseModel):
+    """Request for daily Panchang at a geographic location."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    date: str = Field(
+        ...,
+        description="Local Gregorian date in YYYY-MM-DD format.",
+        min_length=10,
+        max_length=10,
+        pattern=r"^\d{4}-\d{2}-\d{2}$",
+    )
+    latitude: float = Field(..., ge=-90.0, le=90.0)
+    longitude: float = Field(..., ge=-180.0, le=180.0)
+    elevation_m: float = Field(default=0.0, ge=-500.0, le=12000.0)
+    timezone: str = Field(default="Asia/Kolkata", min_length=1)
+
+
+class DailyPanchangResponse(BaseModel):
+    """Daily Panchang calculated at local sunrise."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    date: str
+    observer: dict[str, Any]
+    sunrise: dict[str, Any]
+    vara: dict[str, Any]
+    panchang: PanchangInstantResponse | None
+    status: str
+    message: str | None = None

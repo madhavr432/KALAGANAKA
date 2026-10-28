@@ -12,6 +12,7 @@ from app.api.panchang import router as panchang_router
 from app.api.solar import router as solar_router
 from app.api.traditional import router as traditional_router
 from app.api.festivals import router as festivals_router
+from app.api.daily_panchang import router as daily_panchang_router
 
 app = FastAPI(
     title="KalaGanaka API",
@@ -42,6 +43,7 @@ app.include_router(festivals_router)
 app.include_router(astronomy_router)
 app.include_router(solar_router)
 app.include_router(panchang_router)
+app.include_router(daily_panchang_router)
 
 
 @app.get("/health", tags=["Health"])

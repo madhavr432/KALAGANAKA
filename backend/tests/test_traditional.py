@@ -11,6 +11,8 @@ from app.traditional.solar_method import (
 )
 from app.services.traditional_service import calculate_solar_position
 from app.traditional.solar_method import (
+    REFERENCE_SOLAR_APSIS_LONGITUDE_DEG,
+    calculate_solar_apsis_longitude_for_year,
     CIVIL_DAYS_PER_MAHAYUGA,
     calculate_mean_solar_longitude,
 )
@@ -78,7 +80,33 @@ class TestMeanSolarLongitude(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     calculate_mean_solar_longitude_for_date(value)
 
+class TestSolarApsisLongitude(unittest.TestCase):
+    def test_reference_year_matches_reference_longitude(self):
+        result = calculate_solar_apsis_longitude_for_year(1850)
 
+        self.assertAlmostEqual(
+            result,
+            REFERENCE_SOLAR_APSIS_LONGITUDE_DEG,
+            places=10,
+        )
+
+    def test_longitude_advances_for_later_year(self):
+        longitude_1850 = calculate_solar_apsis_longitude_for_year(1850)
+        longitude_1900 = calculate_solar_apsis_longitude_for_year(1900)
+
+        self.assertGreater(longitude_1900, longitude_1850)
+
+    def test_result_is_normalized(self):
+        result = calculate_solar_apsis_longitude_for_year(3000)
+
+        self.assertGreaterEqual(result, 0.0)
+        self.assertLess(result, 360.0)
+
+    def test_invalid_year_inputs_are_rejected(self):
+        for value in (float("nan"), float("inf"), True, "1850", None):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    calculate_solar_apsis_longitude_for_year(value)
 
 if __name__ == "__main__":
     unittest.main()
