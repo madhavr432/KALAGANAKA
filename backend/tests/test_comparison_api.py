@@ -1,7 +1,9 @@
 ﻿import unittest
 
 from fastapi.testclient import TestClient
+from unittest.mock import patch
 
+from app.astronomy.ephemeris import DateOutOfRangeError
 from app.main import app
 
 
@@ -76,6 +78,93 @@ class TestComparisonAPI(unittest.TestCase):
             "/comparison/compare", json=payload
         )
         self.assertEqual(response.status_code, 422)
+    
+    @patch("app.api.comparison.calculate_planetary_positions")
+    @patch("app.api.comparison.calculate_solar_position_for_date")
+    def test_integrated_solar_comparison_uses_real_calculation_path(
+        self, mock_traditional, mock_modern
+    ):
+        mock_traditional.return_value = {
+            "body": "Sun",
+            "date": "2026-10-28",
+            "longitude_deg": 10.0,
+            "calculation_type": "mean_longitude",
+            "is_true_longitude": False,
+            "reference_date": "1860-01-01",
+        }
+        mock_modern.return_value = {
+            "positions_sidereal_deg": {"Sun": 12.0},
+        }
+
+        response = self.client.get(
+            "/comparison/solar",
+            params={"date": "2026-10-28"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+
+        self.assertFalse(data["is_mock"])
+        self.assertEqual(data["status"], "comparison")
+        self.assertEqual(data["compared_planets"], ["Sun"])
+        self.assertAlmostEqual(
+            data["results"][0]["traditional_longitude_deg"], 10.0
+        )
+        self.assertAlmostEqual(
+            data["results"][0]["modern_longitude_deg"], 12.0
+        )
+        self.assertAlmostEqual(
+            data["results"][0]["signed_difference_deg"], -2.0
+        )
+        self.assertAlmostEqual(
+            data["results"][0]["absolute_difference_deg"], 2.0
+        )
+
+        basis = data["comparison_basis"]
+        self.assertEqual(
+            basis["traditional_calculation_type"], "mean_longitude"
+        )
+        self.assertFalse(basis["traditional_is_true_longitude"])
+        self.assertEqual(basis["scientific_validation"], "preliminary")
+
+        mock_traditional.assert_called_once()
+        mock_modern.assert_called_once()
+
+    def test_integrated_solar_comparison_rejects_invalid_date(self):
+        response = self.client.get(
+            "/comparison/solar",
+            params={"date": "not-a-date"},
+        )
+        self.assertEqual(response.status_code, 422)
+
+    @patch("app.api.comparison.calculate_planetary_positions")
+    @patch("app.api.comparison.calculate_solar_position_for_date")
+    def test_integrated_solar_comparison_handles_ephemeris_range_error(
+        self, mock_traditional, mock_modern
+    ):
+        mock_traditional.return_value = {
+            "body": "Sun",
+            "date": "1800-01-01",
+            "longitude_deg": 10.0,
+            "calculation_type": "mean_longitude",
+            "is_true_longitude": False,
+            "reference_date": "1860-01-01",
+        }
+        mock_modern.side_effect = DateOutOfRangeError(
+            "Date is outside the supported ephemeris range."
+        )
+
+        response = self.client.get(
+            "/comparison/solar",
+            params={"date": "1800-01-01"},
+        )
+
+        self.assertEqual(response.status_code, 422)
+        self.assertIn(
+            "outside the supported ephemeris range",
+            response.json()["detail"],
+        )
+
 
 
 if __name__ == "__main__":
