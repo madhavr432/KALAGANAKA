@@ -8,6 +8,10 @@ from app.panchang.calculations import (
     calculate_tithi,
     calculate_yoga,
 )
+from app.panchang.vara import (
+    calculate_civil_vara,
+    calculate_vara_at_sunrise,
+)
 from app.panchang.constants import (
     FIXED_KARANAS,
     KARANA_SPAN_DEG,
@@ -22,6 +26,8 @@ from app.panchang.constants import (
 )
 
 __all__ = [
+    "calculate_civil_vara",
+    "calculate_vara_at_sunrise",
     "calculate_tithi",
     "calculate_nakshatra",
     "calculate_yoga",
