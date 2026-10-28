@@ -20,17 +20,14 @@ app = FastAPI(
     version="0.1.0",
 )
 
-# Development CORS origins for local frontend clients
-DEVELOPMENT_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:5173",
-]
+# Development CORS: allow any port on localhost / 127.0.0.1.
+# Vite may start on 5173, 5174, 4173, 8080, etc. depending on availability.
+# Using allow_origin_regex avoids maintaining an explicit port list.
+_LOCAL_ORIGIN_RE = r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=DEVELOPMENT_ORIGINS,
+    allow_origin_regex=_LOCAL_ORIGIN_RE,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
