@@ -7,7 +7,7 @@ from typing import Literal
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from app.services.grok_service import generate_answer
+from app.services.ai_service import generate_answer
 
 logger = logging.getLogger(__name__)
 

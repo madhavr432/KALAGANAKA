@@ -1,5 +1,5 @@
 
-"""Multi-provider AI service: Grok -> Gemini -> OpenRouter."""
+"""Multi-provider AI service: OpenRouter -> Google Gemini fallback."""
 
 import logging
 import os
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = """
 You are KalaGanaka's bilingual assistant for traditional Indian astronomy,
-Sanskrit mathematical traditions, Panchang concepts, and algorithms.
+Sanskrit mathematical traditions and Panchang concepts.
 
 Answer in the requested language. Explain technical concepts clearly.
 Distinguish established facts from interpretations and unverified claims.
@@ -25,54 +25,8 @@ results when provided. If reliable information is unavailable, say so.
 """
 
 
-def _ask_grok(question: str, language: str) -> tuple[str, str]:
-    """Primary provider: xAI Grok."""
-    client = OpenAI(
-        api_key=os.environ["XAI_API_KEY"],
-        base_url="https://api.x.ai/v1",
-        timeout=30.0,
-        max_retries=0,
-    )
-
-    response = client.responses.create(
-        model=os.getenv("XAI_MODEL", "grok-4.7"),
-        instructions=f"{SYSTEM_PROMPT}\nRequested language: {language}.",
-        input=question,
-        max_output_tokens=2048,
-    )
-
-    answer = (response.output_text or "").strip()
-    if not answer:
-        raise RuntimeError("Empty response")
-
-    return answer, response.model
-
-
-def _ask_gemini(question: str, language: str) -> tuple[str, str]:
-    """First fallback: Google Gemini."""
-    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-
-    model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
-    response = client.models.generate_content(
-        model=model,
-        contents=question,
-        config=types.GenerateContentConfig(
-            system_instruction=(
-                f"{SYSTEM_PROMPT}\nRequested language: {language}."
-            ),
-            max_output_tokens=2048,
-        ),
-    )
-
-    answer = (response.text or "").strip()
-    if not answer:
-        raise RuntimeError("Empty response")
-
-    return answer, model
-
-
 def _ask_openrouter(question: str, language: str) -> tuple[str, str]:
-    """Final fallback: a model selected through OpenRouter."""
+    """Primary provider: OpenRouter."""
     client = OpenAI(
         api_key=os.environ["OPENROUTER_API_KEY"],
         base_url="https://openrouter.ai/api/v1",
@@ -90,9 +44,7 @@ def _ask_openrouter(question: str, language: str) -> tuple[str, str]:
         messages=[
             {
                 "role": "system",
-                "content": (
-                    f"{SYSTEM_PROMPT}\nRequested language: {language}."
-                ),
+                "content": f"{SYSTEM_PROMPT}\nRequested language: {language}.",
             },
             {"role": "user", "content": question},
         ],
@@ -100,6 +52,27 @@ def _ask_openrouter(question: str, language: str) -> tuple[str, str]:
     )
 
     answer = (response.choices[0].message.content or "").strip()
+    if not answer:
+        raise RuntimeError("Empty response")
+
+    return answer, response.model or model
+
+
+def _ask_gemini(question: str, language: str) -> tuple[str, str]:
+    """Fallback provider: Google Gemini."""
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+
+    model = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+    response = client.models.generate_content(
+        model=model,
+        contents=question,
+        config=types.GenerateContentConfig(
+            system_instruction=f"{SYSTEM_PROMPT}\nRequested language: {language}.",
+            max_output_tokens=2048,
+        ),
+    )
+
+    answer = (response.text or "").strip()
     if not answer:
         raise RuntimeError("Empty response")
 
@@ -114,12 +87,11 @@ PROVIDERS = (
 
 def generate_answer(question: str, language: str = "auto") -> dict:
     """
-    Try providers in priority order and return the first successful answer.
+    Try OpenRouter first, then Gemini.
 
     Missing keys skip that provider. API errors and empty responses trigger
-    fallback. Raw upstream errors and credentials are never returned to users.
+    fallback. Credentials and raw upstream errors are never returned.
     """
-    failures = []
     configured_count = 0
 
     for provider_name, key_name, provider_function in PROVIDERS:
@@ -136,17 +108,15 @@ def generate_answer(question: str, language: str = "auto") -> dict:
                 "answer": answer,
                 "provider": provider_name,
                 "model": model,
-                "fallback_used" : provider_name != "openrouter"
+                "fallback_used": provider_name == "gemini",
             }
 
         except Exception as exc:
-            # Log the exception type, not the request, response, or API key.
             logger.warning(
                 "Provider %s failed (%s); trying next provider",
                 provider_name,
                 type(exc).__name__,
             )
-            failures.append(provider_name)
 
     if configured_count == 0:
         raise RuntimeError(
