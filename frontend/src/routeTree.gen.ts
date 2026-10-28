@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssistantRouteImport } from './routes/assistant'
+import { Route as ChandraPanchangRouteImport } from './routes/chandra-panchang'
+import { Route as FestivalsRouteImport } from './routes/festivals'
+import { Route as PlanetaryExplorerRouteImport } from './routes/planetary-explorer'
+import { Route as SamratYantraRouteImport } from './routes/samrat-yantra'
+import { Route as SaurPanchangRouteImport } from './routes/saur-panchang'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChandraPanchangRoute = ChandraPanchangRouteImport.update({
+  id: '/chandra-panchang',
+  path: '/chandra-panchang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FestivalsRoute = FestivalsRouteImport.update({
+  id: '/festivals',
+  path: '/festivals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanetaryExplorerRoute = PlanetaryExplorerRouteImport.update({
+  id: '/planetary-explorer',
+  path: '/planetary-explorer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SamratYantraRoute = SamratYantraRouteImport.update({
+  id: '/samrat-yantra',
+  path: '/samrat-yantra',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SaurPanchangRoute = SaurPanchangRouteImport.update({
+  id: '/saur-panchang',
+  path: '/saur-panchang',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
+  '/chandra-panchang': typeof ChandraPanchangRoute
+  '/festivals': typeof FestivalsRoute
+  '/planetary-explorer': typeof PlanetaryExplorerRoute
+  '/samrat-yantra': typeof SamratYantraRoute
+  '/saur-panchang': typeof SaurPanchangRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
+  '/chandra-panchang': typeof ChandraPanchangRoute
+  '/festivals': typeof FestivalsRoute
+  '/planetary-explorer': typeof PlanetaryExplorerRoute
+  '/samrat-yantra': typeof SamratYantraRoute
+  '/saur-panchang': typeof SaurPanchangRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
+  '/chandra-panchang': typeof ChandraPanchangRoute
+  '/festivals': typeof FestivalsRoute
+  '/planetary-explorer': typeof PlanetaryExplorerRoute
+  '/samrat-yantra': typeof SamratYantraRoute
+  '/saur-panchang': typeof SaurPanchangRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/assistant'
+    | '/chandra-panchang'
+    | '/festivals'
+    | '/planetary-explorer'
+    | '/samrat-yantra'
+    | '/saur-panchang'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/assistant'
+    | '/chandra-panchang'
+    | '/festivals'
+    | '/planetary-explorer'
+    | '/samrat-yantra'
+    | '/saur-panchang'
+  id:
+    | '__root__'
+    | '/'
+    | '/assistant'
+    | '/chandra-panchang'
+    | '/festivals'
+    | '/planetary-explorer'
+    | '/samrat-yantra'
+    | '/saur-panchang'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssistantRoute: typeof AssistantRoute
+  ChandraPanchangRoute: typeof ChandraPanchangRoute
+  FestivalsRoute: typeof FestivalsRoute
+  PlanetaryExplorerRoute: typeof PlanetaryExplorerRoute
+  SamratYantraRoute: typeof SamratYantraRoute
+  SaurPanchangRoute: typeof SaurPanchangRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chandra-panchang': {
+      id: '/chandra-panchang'
+      path: '/chandra-panchang'
+      fullPath: '/chandra-panchang'
+      preLoaderRoute: typeof ChandraPanchangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/festivals': {
+      id: '/festivals'
+      path: '/festivals'
+      fullPath: '/festivals'
+      preLoaderRoute: typeof FestivalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planetary-explorer': {
+      id: '/planetary-explorer'
+      path: '/planetary-explorer'
+      fullPath: '/planetary-explorer'
+      preLoaderRoute: typeof PlanetaryExplorerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/samrat-yantra': {
+      id: '/samrat-yantra'
+      path: '/samrat-yantra'
+      fullPath: '/samrat-yantra'
+      preLoaderRoute: typeof SamratYantraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saur-panchang': {
+      id: '/saur-panchang'
+      path: '/saur-panchang'
+      fullPath: '/saur-panchang'
+      preLoaderRoute: typeof SaurPanchangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssistantRoute: AssistantRoute,
+  ChandraPanchangRoute: ChandraPanchangRoute,
+  FestivalsRoute: FestivalsRoute,
+  PlanetaryExplorerRoute: PlanetaryExplorerRoute,
+  SamratYantraRoute: SamratYantraRoute,
+  SaurPanchangRoute: SaurPanchangRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

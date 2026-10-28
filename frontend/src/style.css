@@ -1,4 +1,4 @@
-@import "tailwindcss" ;
+@import "tailwindcss";
 @source "../src";
 @import "tw-animate-css";
 
@@ -155,51 +155,276 @@
 
 @utility text-gold-gradient {
   background: linear-gradient(180deg, var(--gold-light), var(--gold) 55%, var(--gold-deep));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-@utility bg-gold-gradient { background: linear-gradient(180deg, var(--gold-soft), var(--gold-deep)); }
-@utility drop-shadow-gold { filter: drop-shadow(0 4px 18px color-mix(in oklab, var(--gold) 35%, transparent)); }
+@utility bg-gold-gradient {
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold-deep));
+}
+@utility drop-shadow-gold {
+  filter: drop-shadow(0 4px 18px color-mix(in oklab, var(--gold) 35%, transparent));
+}
 
-.stars { background-image: radial-gradient(1px 1px at 20% 30%, var(--gold-light), transparent), radial-gradient(1px 1px at 70% 20%, var(--gold-soft), transparent), radial-gradient(1px 1px at 40% 80%, var(--gold-light), transparent), radial-gradient(1px 1px at 85% 65%, var(--gold-soft), transparent), radial-gradient(1.5px 1.5px at 10% 70%, var(--gold-light), transparent), radial-gradient(1px 1px at 55% 50%, var(--gold-soft), transparent), radial-gradient(ellipse at 30% 90%, color-mix(in oklab, var(--gold-deep) 18%, transparent), transparent 50%); background-size: 260px 260px, 330px 330px, 410px 410px, 290px 290px, 370px 370px, 200px 200px, 100% 100%; opacity:.8 }
-.scene { opacity:0; transition: opacity .7s ease, filter .7s; filter: blur(6px) }
-.scene.is-on { opacity:1; filter:none }
-.scene .line, .scene.is-on .line { display:block; opacity:0; animation: reveal 1s ease forwards }
-@keyframes reveal { from { opacity:0; filter: blur(8px); transform: translateY(6px) } to { opacity:1; filter:none; transform:none } }
+.stars {
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, var(--gold-light), transparent),
+    radial-gradient(1px 1px at 70% 20%, var(--gold-soft), transparent),
+    radial-gradient(1px 1px at 40% 80%, var(--gold-light), transparent),
+    radial-gradient(1px 1px at 85% 65%, var(--gold-soft), transparent),
+    radial-gradient(1.5px 1.5px at 10% 70%, var(--gold-light), transparent),
+    radial-gradient(1px 1px at 55% 50%, var(--gold-soft), transparent),
+    radial-gradient(
+      ellipse at 30% 90%,
+      color-mix(in oklab, var(--gold-deep) 18%, transparent),
+      transparent 50%
+    );
+  background-size:
+    260px 260px,
+    330px 330px,
+    410px 410px,
+    290px 290px,
+    370px 370px,
+    200px 200px,
+    100% 100%;
+  opacity: 0.8;
+}
+.scene {
+  opacity: 0;
+  transition:
+    opacity 0.7s ease,
+    filter 0.7s;
+  filter: blur(6px);
+}
+.scene.is-on {
+  opacity: 1;
+  filter: none;
+}
+.scene .line,
+.scene.is-on .line {
+  display: block;
+  opacity: 0;
+  animation: reveal 1s ease forwards;
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
 
-.spark-trail { left:50%; top:30%; width:6px; height:6px; border-radius:50%; background: var(--gold-light); box-shadow: 0 0 20px 8px var(--gold), 0 0 60px 20px color-mix(in oklab,var(--gold) 40%,transparent); animation: spark 1.1s ease-in-out forwards }
-@keyframes spark { 0% { transform: translate(30vw,-20vh) scale(.3); opacity:0 } 20%{opacity:1} 100% { transform: translate(-6vw, 20vh) scale(1); opacity:1 } }
+.spark-trail {
+  left: 50%;
+  top: 30%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  box-shadow:
+    0 0 20px 8px var(--gold),
+    0 0 60px 20px color-mix(in oklab, var(--gold) 40%, transparent);
+  animation: spark 1.1s ease-in-out forwards;
+}
+@keyframes spark {
+  0% {
+    transform: translate(30vw, -20vh) scale(0.3);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-6vw, 20vh) scale(1);
+    opacity: 1;
+  }
+}
 
-.mandala-wrap { width:min(80vmin,560px); aspect-ratio:1; transform: translate(-50%,-50%); opacity:0; transition: opacity .6s, width 1.2s ease; color: var(--gold) }
-.mandala-wrap.is-on { opacity:1 }
-.mandala-wrap.small { width:min(42vmin,300px); filter: drop-shadow(0 0 12px var(--gold)) }
-.mandala { width:100%; height:100%; filter: drop-shadow(0 0 4px color-mix(in oklab,var(--gold) 70%,transparent)) }
-.mandala .draw { stroke-dasharray:1; stroke-dashoffset:1 }
-.drawing .mandala .draw { animation: draw 1.6s ease forwards }
-.drawn .draw, .mandala.drawn .draw { stroke-dashoffset:0 }
-.drawing .d2{animation-delay:.2s!important}.drawing .d3{animation-delay:.5s!important}.drawing .d4{animation-delay:.8s!important}.drawing .d5{animation-delay:1s!important}
-@keyframes draw { to { stroke-dashoffset:0 } }
-.mandala .glyphs { font-family: var(--font-deva); opacity:1 }
-.drawing .glyphs { opacity:0; animation: reveal .6s 1.2s forwards }
-.mandala .core { transform-origin:200px 200px }
-.drawing .core { animation: core 1.9s ease-in forwards }
-@keyframes core { to { transform: scale(4) } }
-.orbit-light { position:absolute; inset:15%; border-radius:50%; animation: orbit 1.6s linear infinite }
-.orbit-light::before { content:""; position:absolute; top:-4px; left:50%; width:10px; height:10px; border-radius:50%; background: var(--gold-light); box-shadow: 0 0 24px 10px var(--gold) }
-@keyframes orbit { to { transform: rotate(360deg) } }
+.mandala-wrap {
+  width: min(80vmin, 560px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition:
+    opacity 0.6s,
+    width 1.2s ease;
+  color: var(--gold);
+}
+.mandala-wrap.is-on {
+  opacity: 1;
+}
+.mandala-wrap.small {
+  width: min(42vmin, 300px);
+  filter: drop-shadow(0 0 12px var(--gold));
+}
+.mandala {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 4px color-mix(in oklab, var(--gold) 70%, transparent));
+}
+.mandala .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.drawing .mandala .draw {
+  animation: draw 1.6s ease forwards;
+}
+.drawn .draw,
+.mandala.drawn .draw {
+  stroke-dashoffset: 0;
+}
+.drawing .d2 {
+  animation-delay: 0.2s !important;
+}
+.drawing .d3 {
+  animation-delay: 0.5s !important;
+}
+.drawing .d4 {
+  animation-delay: 0.8s !important;
+}
+.drawing .d5 {
+  animation-delay: 1s !important;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.mandala .glyphs {
+  font-family: var(--font-deva);
+  opacity: 1;
+}
+.drawing .glyphs {
+  opacity: 0;
+  animation: reveal 0.6s 1.2s forwards;
+}
+.mandala .core {
+  transform-origin: 200px 200px;
+}
+.drawing .core {
+  animation: core 1.9s ease-in forwards;
+}
+@keyframes core {
+  to {
+    transform: scale(4);
+  }
+}
+.orbit-light {
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  animation: orbit 1.6s linear infinite;
+}
+.orbit-light::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  box-shadow: 0 0 24px 10px var(--gold);
+}
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-.flash { background: radial-gradient(circle, var(--gold-light) 0%, var(--gold) 25%, color-mix(in oklab,var(--gold-deep) 50%,transparent) 50%, transparent 75%); animation: flash .9s ease-out forwards; z-index:5 }
-@keyframes flash { 0% { opacity:0; transform: scale(.2) } 35% { opacity:1; transform:scale(1) } 100% { opacity:0; transform: scale(1.6) } }
-.nebula { opacity:0; transition: opacity 1s; }
-.nebula.is-on { opacity:1; animation: zoom 1.4s ease-out }
-@keyframes zoom { from { transform: scale(1.15) } to { transform:none } }
+.flash {
+  background: radial-gradient(
+    circle,
+    var(--gold-light) 0%,
+    var(--gold) 25%,
+    color-mix(in oklab, var(--gold-deep) 50%, transparent) 50%,
+    transparent 75%
+  );
+  animation: flash 0.9s ease-out forwards;
+  z-index: 5;
+}
+@keyframes flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+.nebula {
+  opacity: 0;
+  transition: opacity 1s;
+}
+.nebula.is-on {
+  opacity: 1;
+  animation: zoom 1.4s ease-out;
+}
+@keyframes zoom {
+  from {
+    transform: scale(1.15);
+  }
+  to {
+    transform: none;
+  }
+}
 
-.site { opacity:0; pointer-events:none; transition: opacity 1.2s ease; }
-.site.is-on { opacity:1; pointer-events:auto }
-.site-mandala { width:min(50vmin,380px); aspect-ratio:1; transform: translate(-50%,-50%); color: var(--gold); opacity:.18 }
-.site.is-on .site-mandala { animation: fadeMand 3s ease forwards }
-@keyframes fadeMand { 0% { opacity:.7 } 100% { opacity:.12 } }
-.site .rise, .site .nav { opacity:0 }
-.site.is-on .rise { animation: reveal 1s ease forwards }
-.site.is-on .nav { animation: reveal .8s .9s ease forwards }
-.cta { background: linear-gradient(180deg, var(--gold-soft), var(--gold-deep)); color: var(--background); box-shadow: 0 0 24px color-mix(in oklab,var(--gold) 35%,transparent); transition: transform .2s, box-shadow .2s }
-.cta:hover { transform: translateY(-2px); box-shadow: 0 0 36px color-mix(in oklab,var(--gold) 55%,transparent) }
+.site {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+.site.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.site-mandala {
+  width: min(50vmin, 380px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  color: var(--gold);
+  opacity: 0.18;
+}
+.site.is-on .site-mandala {
+  animation: fadeMand 3s ease forwards;
+}
+@keyframes fadeMand {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.12;
+  }
+}
+.site .rise,
+.site .nav {
+  opacity: 0;
+}
+.site.is-on .rise {
+  animation: reveal 1s ease forwards;
+}
+.site.is-on .nav {
+  animation: reveal 0.8s 0.9s ease forwards;
+}
+.cta {
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold-deep));
+  color: var(--background);
+  box-shadow: 0 0 24px color-mix(in oklab, var(--gold) 35%, transparent);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 36px color-mix(in oklab, var(--gold) 55%, transparent);
+}

@@ -27,18 +27,41 @@ export function Mandala({ className = "" }: { className?: string }) {
         {Array.from({ length: 24 }, (_, i) => {
           const a = (i * Math.PI) / 12;
           return (
-            <line key={i} className="draw d3" pathLength={1} strokeWidth=".4"
-              x1={c + Math.cos(a) * 138} y1={c + Math.sin(a) * 138}
-              x2={c + Math.cos(a) * 182} y2={c + Math.sin(a) * 182} />
+            <line
+              key={i}
+              className="draw d3"
+              pathLength={1}
+              strokeWidth=".4"
+              x1={c + Math.cos(a) * 138}
+              y1={c + Math.sin(a) * 138}
+              x2={c + Math.cos(a) * 182}
+              y2={c + Math.sin(a) * 182}
+            />
           );
         })}
         {outer.map((o, i) => (
-          <circle key={i} className="draw d2" pathLength={1} cx={o.x} cy={o.y} r="17" fill="var(--background)" />
+          <circle
+            key={i}
+            className="draw d2"
+            pathLength={1}
+            cx={o.x}
+            cy={o.y}
+            r="17"
+            fill="var(--background)"
+          />
         ))}
       </g>
-      <g className="glyphs" fill="currentColor" fontSize="16" textAnchor="middle" dominantBaseline="central">
+      <g
+        className="glyphs"
+        fill="currentColor"
+        fontSize="16"
+        textAnchor="middle"
+        dominantBaseline="central"
+      >
         {outer.map((o, i) => (
-          <text key={i} x={o.x} y={o.y}>{o.g}</text>
+          <text key={i} x={o.x} y={o.y}>
+            {o.g}
+          </text>
         ))}
       </g>
       <circle className="core" cx={c} cy={c} r="12" fill="url(#coreG)" />

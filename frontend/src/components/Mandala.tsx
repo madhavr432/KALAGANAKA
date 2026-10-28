@@ -1,1 +1,1 @@
-export { Mandala } from './Mandela';
+export { Mandala } from "./Mandela";
