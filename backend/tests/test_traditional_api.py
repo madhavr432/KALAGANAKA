@@ -6,7 +6,9 @@ import unittest
 from fastapi.testclient import TestClient
 
 from app.main import app
-
+from app.traditional.solar_method import (
+    calculate_solar_apsis_longitude_for_year,
+)
 client = TestClient(app)
 
 
@@ -30,6 +32,17 @@ class TestTraditionalSolarAPI(unittest.TestCase):
         self.assertEqual(data["calculation_type"], "mean_longitude")
         self.assertFalse(data["is_true_longitude"])
         self.assertTrue(data["limitations"])
+        self.assertIn("solar_apsis_longitude_deg", data)
+        self.assertAlmostEqual(
+            data["solar_apsis_longitude_deg"],
+            calculate_solar_apsis_longitude_for_year(1860),
+            places=8,
+        )
+        self.assertFalse(data["is_true_longitude"])
+        self.assertIn(
+            "The solar equation of the apsis has not been applied.",
+            data["limitations"],
+        )
 
     def test_invalid_date_returns_422(self):
         response = client.get(
