@@ -472,3 +472,95 @@ class TestEphemerisBoundaryAndSafeguards:
         assert tr["from_name"] == "Naga"
         assert tr["to_name"] == "Kimstughna"
         assert tr["confirmed_change"] is True
+
+class TestIndoreOctober2026Regression:
+    """Regression tests for validated Indore Panchang transition timings."""
+
+    def test_indore_tithi_transition_october_28_2026(self):
+        res = find_panchang_transitions(
+            "2026-10-28T00:00:00+05:30",
+            "2026-10-30T00:00:00+05:30",
+            ["tithi"],
+            "Asia/Kolkata",
+            auto_download=False,
+        )
+
+        transitions = res["transitions"]
+
+        expected = [
+            ("Dwitiya", "Tritiya", "2026-10-28T04:07:24+05:30"),
+            ("Tritiya", "Chaturthi", "2026-10-29T01:07:14+05:30"),
+            ("Chaturthi", "Panchami", "2026-10-29T22:10:39+05:30"),
+        ]
+
+        for from_name, to_name, expected_time in expected:
+            matches = [
+                tr for tr in transitions
+                if tr["from_name"] == from_name
+                and tr["to_name"] == to_name
+            ]
+            assert len(matches) == 1
+            assert matches[0]["confirmed_change"] is True
+
+            actual = datetime.fromisoformat(
+                matches[0]["transition_time_local"]
+            )
+            reference = datetime.fromisoformat(expected_time)
+
+            # Allow 2 seconds for rounding/formatting differences.
+            assert abs((actual - reference).total_seconds()) <= 2
+
+    def test_indore_nakshatra_transition_october_28_2026(self):
+        res = find_panchang_transitions(
+            "2026-10-28T00:00:00+05:30",
+            "2026-10-29T00:00:00+05:30",
+            ["nakshatra"],
+            "Asia/Kolkata",
+            auto_download=False,
+        )
+
+        matches = [
+            tr for tr in res["transitions"]
+            if tr["from_name"] == "Krittika"
+            and tr["to_name"] == "Rohini"
+        ]
+
+        assert len(matches) == 1
+        assert matches[0]["confirmed_change"] is True
+
+        actual = datetime.fromisoformat(
+            matches[0]["transition_time_local"]
+        )
+        reference = datetime.fromisoformat(
+            "2026-10-28T13:26:04+05:30"
+        )
+
+        assert abs((actual - reference).total_seconds()) <= 2
+
+    def test_indore_yoga_transition_october_28_2026(self):
+        res = find_panchang_transitions(
+            "2026-10-28T00:00:00+05:30",
+            "2026-10-29T00:00:00+05:30",
+            ["yoga"],
+            "Asia/Kolkata",
+            auto_download=False,
+        )
+
+        matches = [
+            tr for tr in res["transitions"]
+            if tr["from_name"] == "Vyatipata"
+            and tr["to_name"] == "Variyan"
+        ]
+
+        assert len(matches) == 1
+        assert matches[0]["confirmed_change"] is True
+
+        actual = datetime.fromisoformat(
+            matches[0]["transition_time_local"]
+        )
+        reference = datetime.fromisoformat(
+            "2026-10-28T07:18:16+05:30"
+        )
+
+        assert abs((actual - reference).total_seconds()) <= 2
+
