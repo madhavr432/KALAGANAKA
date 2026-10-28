@@ -1,21 +1,50 @@
-
 {
   "traditional_solar": {
     "title": "Surya Siddhanta",
     "translation": "Ebenezer Burgess",
     "edition_year": 1860,
+    "sources": [
+      {
+        "chapter": "I",
+        "reference": "Table of Revolutions and Present Position of the Apsides and Nodes of the Planets; Sun row, A.D. 1850",
+        "verified_claims": [
+          "The table lists 387 solar-apsis revolutions per aeon.",
+          "The table heading specifies years per arcminute of motion; the Sun's listed rate is approximately 516.8 years per arcminute.",
+          "The resulting traditional solar-apsis position for A.D. 1850 is 95 degrees 4 minutes.",
+          "The table separately lists a true position of 100 degrees 22 minutes for A.D. 1850."
+        ]
+      },
+      {
+        "chapter": "I",
+        "reference": "Verse 67 and accompanying calculation notes",
+        "url": "https://www.swaveda.com/texts/surya-siddhanta/1/",
+        "verified_claims": [
+          "The published mean solar longitude for January 1, 1860, midnight at Ujjayini is 257 degrees, 48 minutes, 7 seconds.",
+          "The solar revolution count is 4320000 over 1577917828 civil days."
+        ]
+      },
+      {
+        "chapter": "II",
+        "reference": "Verses 34-45",
+        "url": "https://www.swaveda.com/texts/surya-siddhanta/2/",
+        "verified_claims": [
+          "The traditional true-place method applies a correction for the apsis.",
+          "The correction requires additional traditional parameters and calculation steps."
+        ]
+      }
+    ],
     "implementation_status": "preliminary_mean_motion_only",
     "verified_true_longitude": false,
-    "references_to_verify": [
-      "Chapter I: mean solar motion",
-      "Chapter I: epoch and elapsed-day convention",
-      "Chapter II: solar correction"
+    "pending_verification": [
+      "Exact historical epoch and elapsed-day convention.",
+      "Solar apsis position and its motion.",
+      "Traditional sine table and epicycle parameters.",
+      "Sign conventions and numerical validation of the complete correction."
     ],
     "notes": [
-      "The current implementation calculates mean solar longitude from elapsed days.",
-      "The calendar epoch has not yet been mapped to a date.",
-      "The solar equation of the apsis has not been implemented.",
-      "Historical references and numerical constants require independent verification."
+      "The current implementation calculates mean solar longitude from a published reference position.",
+      "The Gregorian date mapping is a preliminary implementation choice.",
+      "Do not label the result true solar longitude until the traditional correction is implemented and independently validated."
     ]
   }
 }
