@@ -12,7 +12,7 @@ import {
   validateDateRange,
   validateTimeString,
   formatTimezoneAwareInstant,
-} from "@/services/samrat-yantra-math";
+} from "@/services/astronomy-math";
 import { RashiSolarWheel, RASHIS } from "./RashiSolarWheel";
 import { SaurPanchangEducational } from "./SaurPanchangEducational";
 import {
@@ -273,7 +273,7 @@ export function SaurPanchangWorkspace() {
             type="button"
             disabled={isLoading}
             onClick={() => runSaurCalculation()}
-            className="flex items-center gap-2 rounded-lg bg-gold-gradient px-5 py-2 font-sans text-xs font-semibold text-background shadow-md hover:opacity-95 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-gold-gradient px-5 py-2 font-sans text-xs font-bold text-slate-950 shadow-md hover:opacity-95 disabled:opacity-50"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? "animate-spin" : ""}`} />
             <span>

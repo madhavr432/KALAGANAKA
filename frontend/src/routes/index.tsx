@@ -39,11 +39,11 @@ type Phase = "shloka" | "spark" | "mandala" | "flash" | "nebula" | "site";
 
 const ALL_MODULES = [
   {
-    to: "/samrat-yantra",
-    title: "सम्राट यन्त्र अनुकारक",
-    enTitle: "Samrat Yantra Simulator",
-    desc: "Interactive equinoctial sundial & solar shadow simulator",
-    icon: Compass,
+    to: "/timekeeping",
+    title: "प्राचीन एवं आधुनिक काल-गणना",
+    enTitle: "Ancient vs Modern Timekeeping",
+    desc: "Interactive Konark Sun Temple Chakra & modern celestial coordinates",
+    icon: Sun,
   },
   {
     to: "/chandra-panchang",
@@ -96,10 +96,11 @@ function Index() {
   const skip = () => setPhase("site");
 
   const NAV_ITEMS = [
-    { label: "PANCHANG", to: "/chandra-panchang" },
-    { label: "DHARMA", to: "/festivals" },
-    { label: "JYOTISH", to: "/planetary-explorer" },
-    { label: "EXPLORE", to: "/samrat-yantra" },
+    { label: "TIMEKEEPING", to: "/timekeeping" },
+    { label: "LUNAR", to: "/chandra-panchang" },
+    { label: "SOLAR", to: "/saur-panchang" },
+    { label: "PLANETS", to: "/planetary-explorer" },
+    { label: "FESTIVALS", to: "/festivals" },
     { label: "ASSISTANT", to: "/assistant" },
   ];
 
@@ -184,7 +185,7 @@ function Index() {
             <button
               aria-label="Menu"
               onClick={() => setMenuOpen(!menuOpen)}
-              className="grid h-8 w-8 place-items-center rounded-full bg-gold-gradient text-background hover:opacity-90 transition-opacity"
+              className="grid h-8 w-8 place-items-center rounded-full bg-gold-gradient text-slate-950 font-bold hover:opacity-90 transition-opacity shadow-md"
             >
               {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -259,7 +260,7 @@ function Index() {
             style={{ animationDelay: "1.1s" }}
           >
             <Link
-              to="/samrat-yantra"
+              to="/timekeeping"
               className="cta rounded-full px-7 py-3 font-sans text-base font-semibold"
             >
               Begin the Journey

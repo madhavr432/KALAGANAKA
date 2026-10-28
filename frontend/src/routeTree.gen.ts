@@ -14,8 +14,8 @@ import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as ChandraPanchangRouteImport } from './routes/chandra-panchang'
 import { Route as FestivalsRouteImport } from './routes/festivals'
 import { Route as PlanetaryExplorerRouteImport } from './routes/planetary-explorer'
-import { Route as SamratYantraRouteImport } from './routes/samrat-yantra'
 import { Route as SaurPanchangRouteImport } from './routes/saur-panchang'
+import { Route as TimekeepingRouteImport } from './routes/timekeeping'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -42,14 +42,14 @@ const PlanetaryExplorerRoute = PlanetaryExplorerRouteImport.update({
   path: '/planetary-explorer',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SamratYantraRoute = SamratYantraRouteImport.update({
-  id: '/samrat-yantra',
-  path: '/samrat-yantra',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SaurPanchangRoute = SaurPanchangRouteImport.update({
   id: '/saur-panchang',
   path: '/saur-panchang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimekeepingRoute = TimekeepingRouteImport.update({
+  id: '/timekeeping',
+  path: '/timekeeping',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -59,8 +59,8 @@ export interface FileRoutesByFullPath {
   '/chandra-panchang': typeof ChandraPanchangRoute
   '/festivals': typeof FestivalsRoute
   '/planetary-explorer': typeof PlanetaryExplorerRoute
-  '/samrat-yantra': typeof SamratYantraRoute
   '/saur-panchang': typeof SaurPanchangRoute
+  '/timekeeping': typeof TimekeepingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,8 +68,8 @@ export interface FileRoutesByTo {
   '/chandra-panchang': typeof ChandraPanchangRoute
   '/festivals': typeof FestivalsRoute
   '/planetary-explorer': typeof PlanetaryExplorerRoute
-  '/samrat-yantra': typeof SamratYantraRoute
   '/saur-panchang': typeof SaurPanchangRoute
+  '/timekeeping': typeof TimekeepingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,8 +78,8 @@ export interface FileRoutesById {
   '/chandra-panchang': typeof ChandraPanchangRoute
   '/festivals': typeof FestivalsRoute
   '/planetary-explorer': typeof PlanetaryExplorerRoute
-  '/samrat-yantra': typeof SamratYantraRoute
   '/saur-panchang': typeof SaurPanchangRoute
+  '/timekeeping': typeof TimekeepingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -89,8 +89,8 @@ export interface FileRouteTypes {
     | '/chandra-panchang'
     | '/festivals'
     | '/planetary-explorer'
-    | '/samrat-yantra'
     | '/saur-panchang'
+    | '/timekeeping'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,8 +98,8 @@ export interface FileRouteTypes {
     | '/chandra-panchang'
     | '/festivals'
     | '/planetary-explorer'
-    | '/samrat-yantra'
     | '/saur-panchang'
+    | '/timekeeping'
   id:
     | '__root__'
     | '/'
@@ -107,8 +107,8 @@ export interface FileRouteTypes {
     | '/chandra-panchang'
     | '/festivals'
     | '/planetary-explorer'
-    | '/samrat-yantra'
     | '/saur-panchang'
+    | '/timekeeping'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,8 +117,8 @@ export interface RootRouteChildren {
   ChandraPanchangRoute: typeof ChandraPanchangRoute
   FestivalsRoute: typeof FestivalsRoute
   PlanetaryExplorerRoute: typeof PlanetaryExplorerRoute
-  SamratYantraRoute: typeof SamratYantraRoute
   SaurPanchangRoute: typeof SaurPanchangRoute
+  TimekeepingRoute: typeof TimekeepingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -158,18 +158,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanetaryExplorerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/samrat-yantra': {
-      id: '/samrat-yantra'
-      path: '/samrat-yantra'
-      fullPath: '/samrat-yantra'
-      preLoaderRoute: typeof SamratYantraRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/saur-panchang': {
       id: '/saur-panchang'
       path: '/saur-panchang'
       fullPath: '/saur-panchang'
       preLoaderRoute: typeof SaurPanchangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timekeeping': {
+      id: '/timekeeping'
+      path: '/timekeeping'
+      fullPath: '/timekeeping'
+      preLoaderRoute: typeof TimekeepingRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -181,8 +181,8 @@ const rootRouteChildren: RootRouteChildren = {
   ChandraPanchangRoute: ChandraPanchangRoute,
   FestivalsRoute: FestivalsRoute,
   PlanetaryExplorerRoute: PlanetaryExplorerRoute,
-  SamratYantraRoute: SamratYantraRoute,
   SaurPanchangRoute: SaurPanchangRoute,
+  TimekeepingRoute: TimekeepingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

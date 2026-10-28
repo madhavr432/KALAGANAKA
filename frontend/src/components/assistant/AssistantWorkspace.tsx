@@ -39,8 +39,8 @@ const SUGGESTED_QUESTIONS = [
     label: "Tithi Ayanamsha Invariance (तिथि अयनांश अलोप)",
   },
   {
-    q: "How does the giant Samrat Yantra sundial measure time to 2 seconds precision?",
-    label: "Samrat Yantra Precision (सम्राट यन्त्र वेध)",
+    q: "How does the Konark Sun Temple Chakra measure time down to minutes using 30 stone beads?",
+    label: "Konark Wheel Timekeeping (कोणार्क चक्र काल-गणना)",
   },
   {
     q: "Explain the difference between Purnimanta and Amanta lunar month conventions.",
@@ -61,7 +61,7 @@ export function AssistantWorkspace() {
     {
       id: "welcome",
       sender: "assistant",
-      text: "नमस्ते! Welcome to KalaGanaka's Astronomical Assistant. You can ask me questions about traditional Indian astronomy (Siddhanta Jyotisha), Sanskrit mathematical traditions, Panchang calculations, or the Samrat Yantra in English or हिन्दी (Hindi). How may I assist your exploration of time?",
+      text: "नमस्ते! Welcome to KalaGanaka's Astronomical Assistant. You can ask me questions about traditional Indian astronomy (Siddhanta Jyotisha), Sanskrit mathematical traditions, Panchang calculations, or the Konark Sun Temple Chakra in English or हिन्दी (Hindi). How may I assist your exploration of time?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       model: "KalaGanaka Engine",
       provider: "Assistant Core",
@@ -317,7 +317,7 @@ export function AssistantWorkspace() {
               type="button"
               disabled={isLoading || !inputQuestion.trim()}
               onClick={() => handleSend()}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold-gradient text-background hover:opacity-90 disabled:opacity-40 transition-opacity shrink-0"
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold-gradient text-slate-950 font-bold shadow-md hover:opacity-90 disabled:opacity-40 transition-opacity shrink-0"
               aria-label="Send message"
             >
               <Send className="h-4 w-4" />

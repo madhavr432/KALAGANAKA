@@ -12,4 +12,27 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  plugins: [
+    {
+      name: "neutralize-tanstack-inject-source",
+      enforce: "pre",
+      configResolved(config) {
+        for (const p of config.plugins) {
+          if (p && p.name === "@tanstack/devtools:inject-source") {
+            (p as Record<string, unknown>).transform = undefined;
+          }
+        }
+      },
+      transform(code: string) {
+        if (code.includes("data-tsd-source")) {
+          return {
+            code: code
+              .replace(/\s+data-tsd-source="[^"]*"/g, "")
+              .replace(/["']?data-tsd-source["']?\s*:\s*["'][^"']*["'],?/g, ""),
+            map: null,
+          };
+        }
+      },
+    },
+  ],
 });

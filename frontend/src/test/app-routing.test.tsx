@@ -13,10 +13,10 @@ describe("App routing for all six KalaGanaka features", () => {
     expect(matches.at(-1)?.routeId).toBe("/");
   });
 
-  it("matches Feature 1 route for /samrat-yantra", () => {
-    const matches = router.matchRoutes("/samrat-yantra");
+  it("matches Module 1 Timekeeping route for /timekeeping", () => {
+    const matches = router.matchRoutes("/timekeeping");
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
-    expect(matches.at(-1)?.routeId).toBe("/samrat-yantra");
+    expect(matches.at(-1)?.routeId).toBe("/timekeeping");
   });
 
   it("matches Feature 2 route for /chandra-panchang", () => {

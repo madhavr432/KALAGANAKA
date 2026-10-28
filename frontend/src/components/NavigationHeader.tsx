@@ -15,7 +15,7 @@ import {
 
 export interface NavigationHeaderProps {
   currentFeature?:
-    | "samrat-yantra"
+    | "timekeeping"
     | "chandra-panchang"
     | "saur-panchang"
     | "planetary-explorer"
@@ -27,11 +27,11 @@ export interface NavigationHeaderProps {
 
 export const NAV_LINKS = [
   {
-    to: "/samrat-yantra",
-    label: "सम्राट यन्त्र",
-    enLabel: "Samrat Yantra",
-    icon: Compass,
-    id: "samrat-yantra",
+    to: "/timekeeping",
+    label: "काल-गणना",
+    enLabel: "Timekeeping",
+    icon: Sun,
+    id: "timekeeping",
   },
   {
     to: "/chandra-panchang",

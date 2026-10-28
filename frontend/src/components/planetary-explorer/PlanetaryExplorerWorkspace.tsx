@@ -13,7 +13,7 @@ import {
   validateDateRange,
   validateTimeString,
   formatTimezoneAwareInstant,
-} from "@/services/samrat-yantra-math";
+} from "@/services/astronomy-math";
 import { CelestialZodiacSkyMap, type PlanetVisualItem } from "./CelestialZodiacSkyMap";
 import { PlanetaryComparisonPanel } from "./PlanetaryComparisonPanel";
 import { RASHIS } from "../saur-panchang/RashiSolarWheel";
