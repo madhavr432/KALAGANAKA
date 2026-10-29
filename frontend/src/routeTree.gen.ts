@@ -10,10 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalysisLabRouteImport } from './routes/analysis-lab'
 import { Route as AssistantRouteImport } from './routes/assistant'
+import { Route as AstronomyLabRouteImport } from './routes/astronomy-lab'
 import { Route as ChandraPanchangRouteImport } from './routes/chandra-panchang'
-import { Route as FestivalsRouteImport } from './routes/festivals'
-import { Route as PlanetaryExplorerRouteImport } from './routes/planetary-explorer'
 import { Route as SaurPanchangRouteImport } from './routes/saur-panchang'
 import { Route as TimekeepingRouteImport } from './routes/timekeeping'
 
@@ -22,24 +22,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalysisLabRoute = AnalysisLabRouteImport.update({
+  id: '/analysis-lab',
+  path: '/analysis-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AssistantRoute = AssistantRouteImport.update({
   id: '/assistant',
   path: '/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AstronomyLabRoute = AstronomyLabRouteImport.update({
+  id: '/astronomy-lab',
+  path: '/astronomy-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChandraPanchangRoute = ChandraPanchangRouteImport.update({
   id: '/chandra-panchang',
   path: '/chandra-panchang',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FestivalsRoute = FestivalsRouteImport.update({
-  id: '/festivals',
-  path: '/festivals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PlanetaryExplorerRoute = PlanetaryExplorerRouteImport.update({
-  id: '/planetary-explorer',
-  path: '/planetary-explorer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SaurPanchangRoute = SaurPanchangRouteImport.update({
@@ -55,29 +55,29 @@ const TimekeepingRoute = TimekeepingRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analysis-lab': typeof AnalysisLabRoute
   '/assistant': typeof AssistantRoute
+  '/astronomy-lab': typeof AstronomyLabRoute
   '/chandra-panchang': typeof ChandraPanchangRoute
-  '/festivals': typeof FestivalsRoute
-  '/planetary-explorer': typeof PlanetaryExplorerRoute
   '/saur-panchang': typeof SaurPanchangRoute
   '/timekeeping': typeof TimekeepingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analysis-lab': typeof AnalysisLabRoute
   '/assistant': typeof AssistantRoute
+  '/astronomy-lab': typeof AstronomyLabRoute
   '/chandra-panchang': typeof ChandraPanchangRoute
-  '/festivals': typeof FestivalsRoute
-  '/planetary-explorer': typeof PlanetaryExplorerRoute
   '/saur-panchang': typeof SaurPanchangRoute
   '/timekeeping': typeof TimekeepingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analysis-lab': typeof AnalysisLabRoute
   '/assistant': typeof AssistantRoute
+  '/astronomy-lab': typeof AstronomyLabRoute
   '/chandra-panchang': typeof ChandraPanchangRoute
-  '/festivals': typeof FestivalsRoute
-  '/planetary-explorer': typeof PlanetaryExplorerRoute
   '/saur-panchang': typeof SaurPanchangRoute
   '/timekeeping': typeof TimekeepingRoute
 }
@@ -85,38 +85,38 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/analysis-lab'
     | '/assistant'
+    | '/astronomy-lab'
     | '/chandra-panchang'
-    | '/festivals'
-    | '/planetary-explorer'
     | '/saur-panchang'
     | '/timekeeping'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/analysis-lab'
     | '/assistant'
+    | '/astronomy-lab'
     | '/chandra-panchang'
-    | '/festivals'
-    | '/planetary-explorer'
     | '/saur-panchang'
     | '/timekeeping'
   id:
     | '__root__'
     | '/'
+    | '/analysis-lab'
     | '/assistant'
+    | '/astronomy-lab'
     | '/chandra-panchang'
-    | '/festivals'
-    | '/planetary-explorer'
     | '/saur-panchang'
     | '/timekeeping'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalysisLabRoute: typeof AnalysisLabRoute
   AssistantRoute: typeof AssistantRoute
+  AstronomyLabRoute: typeof AstronomyLabRoute
   ChandraPanchangRoute: typeof ChandraPanchangRoute
-  FestivalsRoute: typeof FestivalsRoute
-  PlanetaryExplorerRoute: typeof PlanetaryExplorerRoute
   SaurPanchangRoute: typeof SaurPanchangRoute
   TimekeepingRoute: typeof TimekeepingRoute
 }
@@ -130,6 +130,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analysis-lab': {
+      id: '/analysis-lab'
+      path: '/analysis-lab'
+      fullPath: '/analysis-lab'
+      preLoaderRoute: typeof AnalysisLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/assistant': {
       id: '/assistant'
       path: '/assistant'
@@ -137,25 +144,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/astronomy-lab': {
+      id: '/astronomy-lab'
+      path: '/astronomy-lab'
+      fullPath: '/astronomy-lab'
+      preLoaderRoute: typeof AstronomyLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chandra-panchang': {
       id: '/chandra-panchang'
       path: '/chandra-panchang'
       fullPath: '/chandra-panchang'
       preLoaderRoute: typeof ChandraPanchangRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/festivals': {
-      id: '/festivals'
-      path: '/festivals'
-      fullPath: '/festivals'
-      preLoaderRoute: typeof FestivalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/planetary-explorer': {
-      id: '/planetary-explorer'
-      path: '/planetary-explorer'
-      fullPath: '/planetary-explorer'
-      preLoaderRoute: typeof PlanetaryExplorerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/saur-panchang': {
@@ -177,10 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalysisLabRoute: AnalysisLabRoute,
   AssistantRoute: AssistantRoute,
+  AstronomyLabRoute: AstronomyLabRoute,
   ChandraPanchangRoute: ChandraPanchangRoute,
-  FestivalsRoute: FestivalsRoute,
-  PlanetaryExplorerRoute: PlanetaryExplorerRoute,
   SaurPanchangRoute: SaurPanchangRoute,
   TimekeepingRoute: TimekeepingRoute,
 }
