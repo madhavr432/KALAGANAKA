@@ -23,15 +23,23 @@ app = FastAPI(
 # Development CORS: allow any port on localhost / 127.0.0.1.
 # Vite may start on 5173, 5174, 4173, 8080, etc. depending on availability.
 # Using allow_origin_regex avoids maintaining an explicit port list.
-_LOCAL_ORIGIN_RE = r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
+
+# CORS configuration for local development and production
+_ALLOWED_ORIGINS = [
+    "https://kalaganaka.vercel.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=_LOCAL_ORIGIN_RE,
+    allow_origins=_ALLOWED_ORIGINS,
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(comparison_router)
 app.include_router(traditional_router)
