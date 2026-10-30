@@ -161,7 +161,7 @@ function Index() {
               className="hidden lg:flex items-center gap-1.5 rounded-full border border-gold/25 bg-gold/10 px-3 py-1 font-sans text-xs text-gold-light hover:bg-gold/20 transition-all"
             >
               <Compass className="h-3.5 w-3.5 text-gold" />
-              <span>All 6 Features</span>
+              <span>Explore Modules</span>
             </button>
             <button
               aria-label="Menu"
@@ -237,20 +237,14 @@ function Index() {
             Explore the Wisdom of Time
           </p>
           <div
-            className="rise mt-12 flex flex-wrap items-center justify-center gap-4"
+            className="rise mt-12 flex items-center justify-center"
             style={{ animationDelay: "1.1s" }}
           >
             <Link
               to="/timekeeping"
-              className="cta rounded-full px-7 py-3 font-sans text-base font-semibold"
+              className="cta rounded-full px-8 py-3.5 font-sans text-base font-semibold"
             >
               Begin the Journey
-            </Link>
-            <Link
-              to="/chandra-panchang"
-              className="rounded-full border border-gold/40 bg-gold/10 px-6 py-3 font-sans text-base font-medium text-gold hover:bg-gold/20 transition-all backdrop-blur-sm"
-            >
-              Chandra Panchang
             </Link>
           </div>
         </div>

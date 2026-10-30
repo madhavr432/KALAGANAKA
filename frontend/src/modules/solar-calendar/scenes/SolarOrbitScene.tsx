@@ -25,6 +25,8 @@ installR3fSafety();
 interface SolarOrbitSceneProps {
   solarValues: SolarCalculatedValues;
   selectedDate: string;
+  isPlaying?: boolean;
+  playbackSpeed?: number;
   onSelectStation: (station: AstronomicalStationEvent) => void;
   cameraResetTrigger: number;
 }
@@ -37,6 +39,8 @@ const AXIAL_TILT_RAD = (23.43929 * Math.PI) / 180; // 23.44°
 export const SolarOrbitScene = React.memo(function SolarOrbitScene({
   solarValues,
   selectedDate,
+  isPlaying = false,
+  playbackSpeed = 5,
   onSelectStation,
   cameraResetTrigger,
 }: SolarOrbitSceneProps) {
@@ -103,6 +107,8 @@ export const SolarOrbitScene = React.memo(function SolarOrbitScene({
           <EarthGlobe
             position={[solarValues.earthOrbitX, 0, solarValues.earthOrbitZ]}
             solarValues={solarValues}
+            isPlaying={isPlaying}
+            playbackSpeed={playbackSpeed}
           />
         </Canvas>
       </CanvasErrorBoundary>
@@ -164,10 +170,15 @@ function CameraController({ resetTrigger }: { resetTrigger: number }) {
 /** Central Sun with emissive photosphere and radiant corona. */
 function SunCenter() {
   const coronaRef = useRef<THREE.Mesh>(null);
+  const flareRef = useRef<THREE.Mesh>(null);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (coronaRef.current) {
       coronaRef.current.rotation.y += delta * 0.15;
+    }
+    if (flareRef.current) {
+      const s = 1 + Math.sin(state.clock.elapsedTime * 2.5) * 0.04;
+      flareRef.current.scale.set(s, s, s);
     }
   });
 
@@ -185,10 +196,10 @@ function SunCenter() {
         <meshBasicMaterial color="#ffa500" transparent opacity={0.35} side={THREE.BackSide} />
       </mesh>
 
-      {/* Outer Atmospheric Corona Ring */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[1.25, 2.4, 32]} />
-        <meshBasicMaterial color="#ffb703" transparent opacity={0.2} side={THREE.DoubleSide} />
+      {/* Outer Atmospheric Corona Ring with subtle pulsing flare */}
+      <mesh ref={flareRef} rotation={[Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[1.25, 2.5, 32]} />
+        <meshBasicMaterial color="#ffb703" transparent opacity={0.22} side={THREE.DoubleSide} />
       </mesh>
 
       {/* Sun Center HTML Label */}
@@ -348,11 +359,24 @@ function StationMarker({
 function EarthGlobe({
   position,
   solarValues,
+  isPlaying = false,
+  playbackSpeed = 1,
 }: {
   position: [number, number, number];
   solarValues: SolarCalculatedValues;
+  isPlaying?: boolean;
+  playbackSpeed?: number;
 }) {
   const earthRadius = 0.55;
+  const earthSpinRef = useRef<THREE.Group>(null);
+
+  useFrame((_, delta) => {
+    if (earthSpinRef.current) {
+      // Axial diurnal spin: faster during playback, smooth continuous gentle spin when paused
+      const spinSpeed = isPlaying ? Math.max(1.8, playbackSpeed * 0.75) : 0.35;
+      earthSpinRef.current.rotation.y += delta * spinSpeed;
+    }
+  });
 
   return (
     <group position={position}>
@@ -389,18 +413,21 @@ function EarthGlobe({
           <meshBasicMaterial color="#f59e0b" side={THREE.DoubleSide} transparent opacity={0.6} />
         </mesh>
 
-        {/* Earth Physical Sphere Lit by the Central Sun PointLight */}
-        <mesh receiveShadow castShadow>
-          <sphereGeometry args={[earthRadius, 32, 32]} />
-          <meshStandardMaterial
-            color="#1e3a8a" // Ocean blue
-            roughness={0.7}
-            metalness={0.1}
-          />
-        </mesh>
+        {/* Spinning Earth Globe (Ocean sphere + Continents) */}
+        <group ref={earthSpinRef}>
+          {/* Earth Physical Sphere Lit by the Central Sun PointLight */}
+          <mesh receiveShadow castShadow>
+            <sphereGeometry args={[earthRadius, 32, 32]} />
+            <meshStandardMaterial
+              color="#1e3a8a" // Ocean blue
+              roughness={0.7}
+              metalness={0.1}
+            />
+          </mesh>
 
-        {/* Procedural Continent Landmasses (Layered green-brown meshes) */}
-        <EarthContinents radius={earthRadius} />
+          {/* Procedural Continent Landmasses (Layered green-brown meshes) */}
+          <EarthContinents radius={earthRadius} />
+        </group>
       </group>
 
       {/* Earth Current Date Floating Label */}

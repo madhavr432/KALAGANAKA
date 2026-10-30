@@ -21,6 +21,7 @@ interface SolarOrbitContainerProps {
   onDayOfYearChange: (dayOfYear: number) => void;
   onSelectStation: (station: AstronomicalStationEvent) => void;
   onResetCamera: () => void;
+  cameraResetTrigger: number;
   onOpenInfo: (key: string) => void;
 }
 
@@ -34,6 +35,7 @@ export function SolarOrbitContainer({
   onDayOfYearChange,
   onSelectStation,
   onResetCamera,
+  cameraResetTrigger,
   onOpenInfo,
 }: SolarOrbitContainerProps) {
   const cardinalStations = ASTRONOMICAL_STATIONS.filter(
@@ -120,8 +122,10 @@ export function SolarOrbitContainer({
       <SolarOrbitScene
         solarValues={solarValues}
         selectedDate={selectedDate}
+        isPlaying={isPlaying}
+        playbackSpeed={playbackSpeed}
         onSelectStation={onSelectStation}
-        cameraResetTrigger={0}
+        cameraResetTrigger={cameraResetTrigger}
       />
 
       {/* Annual Timeline Scrubber (Day of Year 1 to 365/366) */}
@@ -161,9 +165,11 @@ export function SolarOrbitContainer({
             type="range"
             min={1}
             max={solarValues.totalDaysInYear}
-            step={1}
-            value={solarValues.dayOfYear}
-            onChange={(e) => onDayOfYearChange(Number(e.target.value))}
+            step={0.1}
+            value={parseFloat(
+              (solarValues.dayOfYear + (solarValues.fractionOfDay || 0)).toFixed(2),
+            )}
+            onChange={(e) => onDayOfYearChange(parseFloat(e.target.value))}
             className="w-full accent-amber-400 cursor-pointer h-2 bg-[#121c2e] rounded-lg appearance-none"
             aria-label="Annual orbit day-of-year scrubber"
           />

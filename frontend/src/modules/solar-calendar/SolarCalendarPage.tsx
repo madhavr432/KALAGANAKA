@@ -122,6 +122,7 @@ export function SolarCalendarPage() {
           onDayOfYearChange={setDayOfYear}
           onSelectStation={jumpToStation}
           onResetCamera={resetCamera}
+          cameraResetTrigger={cameraResetTrigger}
           onOpenInfo={setActiveInfoMetricKey}
         />
 

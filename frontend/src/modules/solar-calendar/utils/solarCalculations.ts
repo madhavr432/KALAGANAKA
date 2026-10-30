@@ -223,6 +223,7 @@ export function calculateSolarValues(
 
   return {
     dayOfYear,
+    fractionOfDay,
     totalDaysInYear: totalDays,
     isLeapYear: leap,
     fractionOfYear,

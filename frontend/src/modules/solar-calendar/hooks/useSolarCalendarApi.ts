@@ -162,8 +162,10 @@ export function useSolarCalendarApi({
 
   // Compute derived solar values integrating live ephemeris overrides when available
   const solarValues: SolarCalculatedValues = useMemo(() => {
+    // Only use backend ephemeris override if not actively animating and the data belongs to the selected date
+    const dateMatches = apiState.planetsData?.instant?.startsWith(selectedDate);
     const override =
-      apiState.planetsData && apiState.planetsData.positions_tropical_deg
+      !isPlaying && dateMatches && apiState.planetsData?.positions_tropical_deg
         ? {
             tropicalLong: apiState.planetsData.positions_tropical_deg["Sun"],
             siderealLong: apiState.planetsData.positions_sidereal_deg["Sun"],
@@ -172,7 +174,7 @@ export function useSolarCalendarApi({
         : undefined;
 
     return calculateSolarValues(selectedDate, selectedTime, override);
-  }, [selectedDate, selectedTime, apiState.planetsData]);
+  }, [selectedDate, selectedTime, apiState.planetsData, isPlaying]);
 
   return {
     apiState,

@@ -82,6 +82,7 @@ export interface SolarFestivalItem {
 
 export interface SolarCalculatedValues {
   dayOfYear: number;
+  fractionOfDay: number;
   totalDaysInYear: number;
   isLeapYear: boolean;
   fractionOfYear: number;

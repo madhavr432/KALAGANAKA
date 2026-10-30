@@ -30,7 +30,8 @@ import {
 } from "lucide-react";
 
 type VoiceLanguage = "auto" | "english" | "hindi";
-type VoiceState = "idle" | "listening" | "processing" | "permission-denied" | "unsupported" | "error";
+type VoiceState =
+  "idle" | "listening" | "processing" | "permission-denied" | "unsupported" | "error";
 
 interface ChatMessage {
   id: string;
@@ -254,12 +255,13 @@ export function AssistantWorkspace() {
       return;
     }
 
-    const recognitionConstructor =
-      window.SpeechRecognition ?? window.webkitSpeechRecognition;
+    const recognitionConstructor = window.SpeechRecognition ?? window.webkitSpeechRecognition;
 
     if (!recognitionConstructor) {
       setVoiceState("unsupported");
-      setVoiceStatus("Voice input is unavailable in this browser. You can still type your question.");
+      setVoiceStatus(
+        "Voice input is unavailable in this browser. You can still type your question.",
+      );
       return;
     }
 
@@ -308,7 +310,9 @@ export function AssistantWorkspace() {
         setVoiceStatus("Microphone permission was denied. Please allow access to use voice input.");
       } else {
         setVoiceState("error");
-        setVoiceStatus(`Speech recognition error: ${errorType}. Please try again or type your question.`);
+        setVoiceStatus(
+          `Speech recognition error: ${errorType}. Please try again or type your question.`,
+        );
       }
       recognitionRef.current = null;
     };
@@ -319,7 +323,10 @@ export function AssistantWorkspace() {
         current === "listening" || current === "processing" ? "idle" : current,
       );
       setVoiceStatus((current) =>
-        current === "Listening for your question…" || current === "Transcript captured. Review the text and send when ready." ? "Voice input is ready." : current,
+        current === "Listening for your question…" ||
+        current === "Transcript captured. Review the text and send when ready."
+          ? "Voice input is ready."
+          : current,
       );
     };
 
@@ -327,7 +334,9 @@ export function AssistantWorkspace() {
       recognition.start();
     } catch {
       setVoiceState("error");
-      setVoiceStatus("A recognition session is already active. Please stop the current recording and try again.");
+      setVoiceStatus(
+        "A recognition session is already active. Please stop the current recording and try again.",
+      );
       recognitionRef.current = null;
     }
   };
@@ -387,7 +396,10 @@ export function AssistantWorkspace() {
   };
 
   const handleClearChat = () => {
-    if (messages.length > 1 && !window.confirm("Discard the current conversation and start a new one?")) {
+    if (
+      messages.length > 1 &&
+      !window.confirm("Discard the current conversation and start a new one?")
+    ) {
       return;
     }
 
@@ -410,10 +422,7 @@ export function AssistantWorkspace() {
   const filteredFaqs = FAQ_ITEMS.filter((item) => {
     const query = faqSearch.trim().toLowerCase();
     if (!query) return true;
-    return (
-      item.question.toLowerCase().includes(query) ||
-      item.answer.toLowerCase().includes(query)
-    );
+    return item.question.toLowerCase().includes(query) || item.answer.toLowerCase().includes(query);
   });
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -620,14 +629,22 @@ export function AssistantWorkspace() {
                   className={`flex h-9 w-9 items-center justify-center rounded-lg border transition-colors ${
                     voiceState === "listening"
                       ? "border-rose-500/40 bg-rose-500/15 text-rose-200"
-                      : voiceState === "permission-denied" || voiceState === "unsupported" || voiceState === "error"
+                      : voiceState === "permission-denied" ||
+                          voiceState === "unsupported" ||
+                          voiceState === "error"
                         ? "border-amber-500/40 bg-amber-500/10 text-amber-200"
                         : "border-gold/25 bg-gold/5 text-gold-soft hover:border-gold/40 hover:text-gold"
                   }`}
-                  aria-label={voiceState === "listening" ? "Stop voice recording" : "Start voice input"}
+                  aria-label={
+                    voiceState === "listening" ? "Stop voice recording" : "Start voice input"
+                  }
                   aria-pressed={voiceState === "listening"}
                 >
-                  {voiceState === "listening" ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                  {voiceState === "listening" ? (
+                    <MicOff className="h-4 w-4" />
+                  ) : (
+                    <Mic className="h-4 w-4" />
+                  )}
                 </button>
 
                 <div className="flex items-center gap-1">
@@ -650,7 +667,19 @@ export function AssistantWorkspace() {
 
                 <div className="ml-auto inline-flex items-center gap-1 text-[10px] text-muted-foreground">
                   <Volume2 className="h-3.5 w-3.5 text-gold-soft" />
-                  <span>{voiceState === "listening" ? "Listening" : voiceState === "processing" ? "Processing" : voiceState === "unsupported" ? "Unsupported" : voiceState === "permission-denied" ? "Permission denied" : voiceState === "error" ? "Recognition error" : "Idle"}</span>
+                  <span>
+                    {voiceState === "listening"
+                      ? "Listening"
+                      : voiceState === "processing"
+                        ? "Processing"
+                        : voiceState === "unsupported"
+                          ? "Unsupported"
+                          : voiceState === "permission-denied"
+                            ? "Permission denied"
+                            : voiceState === "error"
+                              ? "Recognition error"
+                              : "Idle"}
+                  </span>
                 </div>
               </div>
 

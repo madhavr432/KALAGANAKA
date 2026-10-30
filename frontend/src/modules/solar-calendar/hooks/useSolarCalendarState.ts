@@ -92,13 +92,18 @@ export function useSolarCalendarState() {
     });
   }, []);
 
-  // Set day of year (1..365/366)
+  // Set day of year (1..365/366 with smooth fractional hours/minutes)
   const setDayOfYear = useCallback((dayOfYear: number) => {
     setSelectedDate((prevDate) => {
       const year = parseInt(prevDate.split("-")[0], 10) || 2026;
       const total = getDaysInYear(year);
-      const clamped = Math.max(1, Math.min(total, Math.round(dayOfYear)));
-      const d = getDateFromDayOfYear(year, clamped);
+      const clamped = Math.max(1, Math.min(total, dayOfYear));
+      const wholeDay = Math.floor(clamped);
+      const frac = clamped - wholeDay;
+      const d = getDateFromDayOfYear(year, wholeDay);
+      const hours = Math.floor(frac * 24);
+      const mins = Math.floor((frac * 24 - hours) * 60);
+      setSelectedTime(`${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`);
       return d.toISOString().split("T")[0];
     });
   }, []);
@@ -140,40 +145,59 @@ export function useSolarCalendarState() {
     setCameraResetTrigger((prev) => prev + 1);
   }, []);
 
-  // Playback timer loop: advances the date smoothly when playing
+  // Playback timer loop: advances the date and time continuously at 60fps
   const animRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number | null>(null);
+  const selectedDateRef = useRef(selectedDate);
+  const selectedTimeRef = useRef(selectedTime);
+
+  useEffect(() => {
+    selectedDateRef.current = selectedDate;
+    selectedTimeRef.current = selectedTime;
+  }, [selectedDate, selectedTime]);
 
   useEffect(() => {
     if (!isPlaying) {
-      if (animRef.current) cancelAnimationFrame(animRef.current);
+      if (animRef.current) {
+        cancelAnimationFrame(animRef.current);
+        animRef.current = null;
+      }
       lastTimeRef.current = null;
       return;
     }
 
-    let accumulatedDays = 0;
+    const parts = selectedDateRef.current.split("-").map(Number);
+    const timeParts = selectedTimeRef.current.split(":").map(Number);
+    let currentMs = Date.UTC(
+      parts[0] || 2026,
+      (parts[1] || 1) - 1,
+      parts[2] || 1,
+      timeParts[0] || 12,
+      timeParts[1] || 0,
+    );
 
-    const loop = (time: number) => {
+    lastTimeRef.current = performance.now();
+
+    const loop = (now: number) => {
       if (lastTimeRef.current === null) {
-        lastTimeRef.current = time;
+        lastTimeRef.current = now;
       }
-      const deltaTimeSec = (time - lastTimeRef.current) / 1000;
-      lastTimeRef.current = time;
+      const deltaTimeSec = Math.min((now - lastTimeRef.current) / 1000, 0.1);
+      lastTimeRef.current = now;
 
-      // Advance by playbackSpeed days per second
-      accumulatedDays += deltaTimeSec * playbackSpeed;
+      // Advance by playbackSpeed simulated days per real second (1 day = 86,400,000 ms)
+      const msDelta = deltaTimeSec * playbackSpeed * 86_400_000;
+      currentMs += msDelta;
 
-      if (accumulatedDays >= 1) {
-        const fullDays = Math.floor(accumulatedDays);
-        accumulatedDays -= fullDays;
+      const currentDate = new Date(currentMs);
+      const y = currentDate.getUTCFullYear();
+      const m = String(currentDate.getUTCMonth() + 1).padStart(2, "0");
+      const d = String(currentDate.getUTCDate()).padStart(2, "0");
+      const hh = String(currentDate.getUTCHours()).padStart(2, "0");
+      const mm = String(currentDate.getUTCMinutes()).padStart(2, "0");
 
-        setSelectedDate((prev) => {
-          const parts = prev.split("-").map(Number);
-          const d = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
-          d.setUTCDate(d.getUTCDate() + fullDays);
-          return d.toISOString().split("T")[0];
-        });
-      }
+      setSelectedDate(`${y}-${m}-${d}`);
+      setSelectedTime(`${hh}:${mm}`);
 
       animRef.current = requestAnimationFrame(loop);
     };
@@ -181,7 +205,10 @@ export function useSolarCalendarState() {
     animRef.current = requestAnimationFrame(loop);
 
     return () => {
-      if (animRef.current) cancelAnimationFrame(animRef.current);
+      if (animRef.current) {
+        cancelAnimationFrame(animRef.current);
+        animRef.current = null;
+      }
     };
   }, [isPlaying, playbackSpeed]);
 
