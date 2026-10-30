@@ -6,6 +6,8 @@
  */
 
 import React, { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { NavigationHeader } from "@/components/NavigationHeader";
 import { LabHero } from "./components/LabHero";
 import { FormulaSourceExplorer } from "./components/FormulaSourceExplorer";
 import { AncientInstrumentGallery } from "./components/AncientInstrumentGallery";
@@ -33,6 +35,7 @@ import {
   LineChart,
   Layers,
   HelpCircle,
+  Home,
 } from "lucide-react";
 
 export function AstronomyLabPage() {
@@ -86,8 +89,18 @@ export function AstronomyLabPage() {
   };
 
   return (
-    <div className="min-h-screen bg-midnight text-slate-100">
-      <div className="mx-auto max-w-7xl px-4 py-8 space-y-8 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen w-full bg-midnight text-slate-100 antialiased selection:bg-gold/30 selection:text-gold-light">
+      {/* Background Subtle Stars */}
+      <div className="stars pointer-events-none fixed inset-0 opacity-40" aria-hidden />
+
+      {/* Main Responsive Navigation Bar with Home Button */}
+      <NavigationHeader
+        currentFeature="astronomy-lab"
+        title="वेधशाला प्रयोगशाला"
+        subtitle="Ancient vs Modern Analysis Lab"
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-8 space-y-8 sm:px-6 lg:px-8">
         {/* Module Hero Banner */}
         <LabHero
           activeTab={activeTab}
@@ -163,14 +176,24 @@ export function AstronomyLabPage() {
               </h4>
               <p className="font-deva text-xs text-gold-soft">अनुसन्धान अनुभाग त्वरित चयन</p>
             </div>
-            <button
-              type="button"
-              onClick={() => handleOpenInfoModal()}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-gold/40 bg-gold/15 px-3 py-1.5 text-xs font-semibold text-gold hover:bg-gold/25"
-            >
-              <HelpCircle className="h-3.5 w-3.5" />
-              <span>Reference Q&A / FAQs</span>
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                to="/"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-gold/40 bg-gold/15 px-3 py-1.5 text-xs font-semibold text-gold-light hover:bg-gold/25 hover:text-white transition-all shadow-sm"
+                title="Return to KalaGanaka Home Page"
+              >
+                <Home className="h-3.5 w-3.5 text-gold" />
+                <span>Home (मुख्य पृष्ठ)</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => handleOpenInfoModal()}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-gold/40 bg-gold/15 px-3 py-1.5 text-xs font-semibold text-gold hover:bg-gold/25"
+              >
+                <HelpCircle className="h-3.5 w-3.5" />
+                <span>Reference Q&A / FAQs</span>
+              </button>
+            </div>
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7 text-xs">

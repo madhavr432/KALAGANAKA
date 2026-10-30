@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { Link } from "@tanstack/react-router";
 import {
   Scale,
   BookOpen,
@@ -14,6 +15,7 @@ import {
   Layers,
   Sparkles,
   CheckCircle,
+  Home,
 } from "lucide-react";
 import type { LabTabId } from "../hooks/useAstronomyLabState";
 
@@ -65,6 +67,15 @@ export function LabHero({ activeTab, setActiveTab, isBackendOnline, onOpenInfo }
       <div className="relative z-10 space-y-6">
         {/* Module Sub-Badge */}
         <div className="flex flex-wrap items-center gap-3">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/15 px-3.5 py-1 text-xs font-semibold text-gold-light hover:bg-gold/25 hover:text-white transition-all shadow-sm"
+            title="Return to KalaGanaka Home Page"
+          >
+            <Home className="h-3.5 w-3.5 text-gold" />
+            <span>Home (मुख्य पृष्ठ)</span>
+          </Link>
+
           <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-gold-light">
             <Scale className="h-3.5 w-3.5" />
             <span>Module 5 • प्राचीन एवं आधुनिक वेधशाला प्रयोगशाला</span>

@@ -67,8 +67,8 @@ export function NavigationHeader({ currentFeature, title, subtitle }: Navigation
             className="flex items-center gap-1.5 rounded-lg border border-gold/20 bg-gold/5 px-2.5 py-1.5 font-sans text-xs font-medium text-gold-soft transition-colors hover:bg-gold/15 hover:text-gold"
             aria-label="Back to KalaGanaka Home"
           >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">मुख्य पृष्ठ</span>
+            <Home className="h-4 w-4 text-gold" />
+            <span>Home</span>
           </Link>
           <div className="h-4 w-px bg-gold/20" />
           <Link to="/" className="group flex flex-col items-start leading-none">
